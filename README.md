@@ -4,14 +4,14 @@
 
 The following dependencies need to be installed prior to installation
 
-###Python and required associated libraries:
+### Python and required associated libraries:
 
 python 2.7
 numpy
 scipy
 sasmol
 
-###Simulation and Modeling Engines:
+### Simulation and Modeling Engines:
 
 NAMD
 APBS
@@ -19,17 +19,17 @@ PDB2PQR
 ROSETTA
 PYROSETTA
 
-###Compilation and run-time libraries:
+### Compilation and run-time libraries:
 
 GCC/G++
 CUDA 
 
-###EDIT THE FOLLOWING FILE TO PROVIDE INFORMATION REGARDING DEPENENCIES
+### EDIT THE FOLLOWING FILE TO PROVIDE INFORMATION REGARDING DEPENENCIES
 
 trunk/sassie/util/sasconfig.py
 
 
-###SASSIE INSTALLATION:
+### SASSIE INSTALLATION:
 
 To install:
 
