@@ -1,0 +1,58 @@
+   C R Y S O L    Version 2.8  -- 16/02/11 
+ 
+ 
+ -- Program  started  at   11-Oct-2016   13:44:36--
+ 
+ --------  Real space resolution and grid  -------- 
+ 
+  Maximum order of harmonics ............................ : 15
+  Order of Fibonacci grid ............................... : 17
+  Total number of directions ............................ : 2585
+ 
+ ------------  Reciprocal space grid  -------------
+ 
+   in s = 4*pi*sin(theta)/lambda [1/angstrom] 
+  Maximum scattering angle .............................. : 0.3000
+  Number of angular points .............................. : 31
+ 
+ --- Structural parameters (sizes in angstroms) --- 
+ 
+ PDB file name .......................................... : ./tmp//dum.pdb
+  Number of atoms read .................................. : 3352
+  Number of discarded hydrogens ......................... : 3378
+ Geometric Center:  -13.090  -39.810   -5.480
+  Number of carbons read ................................ : 2080
+  Number of nitrogens read .............................. : 616
+  Number of oxigens read ................................ : 632
+  Number of sulfur atoms read ........................... : 24
+ For 1657  zero directions radius    6.38 assumed
+ Center of the excess electron density:  0.313  0.936 -0.592
+ Electron   Rg   :  63.78       Envelope   Rg      :  61.04    
+ Shape      Rg   :  63.76       Envelope  volume   : 0.1331E+06
+ Shell    volume : 0.2227E+05   Envelope  surface  :  6806.    
+ Shell      Rg   :  65.87       Envelope  radius   :  103.1    
+ Shell    width  :  3.000       Envelope  diameter :  202.3    
+ Molecular Weight: 0.4449E+05   Dry volume         : 0.5393E+05
+ Displaced volume: 0.4199E+05   Average atomic rad.:  1.441    
+ Number of residuals :     422
+ 
+ -- No data fitting, parameters entered manually --
+ 
+ Solvent density ........................................ : 0.3340
+ Contrast of the solvation shell ........................ : 3.000e-2
+ Average atomic radius .................................. : 1.441
+ Excluded Volume ........................................ : 4.199e+4
+ Average atomic volume .................................. : 12.53
+ Radius of gyration from atomic structure
+ Rg ( Atoms - Excluded volume + Shell ) ................. : 64.00
+ Rg from the slope of net intensity ..................... : 63.56
+ Average electron density ............................... : 0.5293
+  
+ ----------------  Output files  ------------------
+  
+ Coefficients   saved to file dum00.flm
+ CRYSOL data    saved to file dum00.sav
+ Intensities    saved to file dum00.int
+ Net amplitudes saved to file dum00.alm
+ 
+   C R Y S O L    Version 2.8  -- 16/02/11  ----  terminated at   11-Oct-2016   13:44:37--

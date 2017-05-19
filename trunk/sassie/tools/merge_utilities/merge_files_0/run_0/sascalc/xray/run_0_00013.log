@@ -1,0 +1,14 @@
+#Structural Information:
+1. PDB input file = /share/apps/genapp/sassie2/results/users/joseph/no_project_specified/min3.pdb
+2. Number of atoms = 6730; Mw = 48502.45
+3. Dimensions = x: -61.07, 30.28, y: -81.25, 31.37, z: -89.65, 99.65
+4. Maximum radial dimension Dmax = 238.46 A (contrast-independent)
+5. Molecular center of mass = x: -15.38, y: -19.89, z: 6.40 (contrast-independent)
+6. Molecular Rg = 64.793481 A (contrast-independent)
+#Scattering Intensity:
+7. Source = x-ray
+8. I(q) .vs. q file = run_0/sascalc/xray/run_0_00013.iq
+9. Number of golden vectors used = 35
+10. Io =      1.000
+11. Center of Mass = x: -14.98, y: -19.21, z: 5.42 (contrast-dependent)
+12. Rg = 64.369361 (contrast-dependent)

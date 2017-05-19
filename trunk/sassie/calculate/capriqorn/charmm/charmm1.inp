@@ -1,0 +1,47 @@
+* title
+*
+
+open unit 1 read form name ~/research/toppar/top_all27_prot_na.inp
+read rtf card unit 1
+close unit 1
+
+open unit 1 read form name ~/research/toppar/par_all27_prot_na.inp
+read param card unit 1
+close unit 1
+
+open unit 1 read card name n_rn_newp_recd_251_466_534_600.pdb
+read sequence pdb unit 1
+close unit 1
+
+generate TRA3 first nter last cter setup
+
+open unit 1 read card name n_rn_newp_recd_251_466_534_600.pdb
+read unit 1 coor pdb
+close unit 1
+
+!ic seed
+ic fill preserve
+ic param
+ic build
+
+! Calculate an energy.
+Energy ihbfrq 0 inbfrq 10 imgfrq 10 cutim 999.0
+!
+CONS fix select resid 200 end 
+CONS fix select resid 217 end 
+
+! Perform the minimisation.
+Minimise Abnr Nstep 50000 Nprint 50 Tolgrd 0.01 Inbfrq 0 Imgfrq 0
+
+! Test the first derivatives.
+!Test First Step 0.000001 Tol 0.000001
+
+! Save the optimised coordinates.
+Open write card unit 17 name n_rn_newp_recd_251_466_534_600_cminimized2.pdb
+Write coor pdb unit 17
+* minimized region 3
+* by jc 6/02/10
+*
+close unit 17
+
+stop

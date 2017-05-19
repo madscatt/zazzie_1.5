@@ -1,0 +1,8 @@
+* Title 
+*
+OPEN UNIT 1 CARD READ NAME /usr/local/bin/toppar/top_all27_prot_na.rtf
+READ RTF CARD UNIT 1
+CLOSE UNIT 1
+
+
+

@@ -1,0 +1,2 @@
+rm -f *.pyc *_log *_json
+rm -Rf run_0/sas_dock run_0/work

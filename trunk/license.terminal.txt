@@ -1,0 +1,4 @@
+    SASSIE  Copyright (C) 2011 Joseph E. Curtis
+    This program comes with ABSOLUTELY NO WARRANTY; 
+    This is free software. You are welcome to redistribute it under certain
+    conditions; see http://www.gnu.org/licenses/gpl-3.0.html for details.

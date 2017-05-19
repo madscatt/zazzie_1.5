@@ -1,0 +1,18 @@
+#Structural Information:
+1. PDB input file = /share/apps/genapp/sassie2/results/users/joseph/no_project_specified/min3.pdb
+2. Number of atoms = 6730; Mw = 48502.45
+3. Dimensions = x: -86.81, 19.60, y: -78.72, 40.13, z: -74.67, 86.40
+4. Maximum radial dimension Dmax = 226.69 A (contrast-independent)
+5. Molecular center of mass = x: -23.64, y: -19.61, z: 3.60 (contrast-independent)
+6. Molecular Rg = 62.170739 A (contrast-independent)
+#Scattering Intensity:
+7. Source = neutron
+8. D2O % =  80.000
+9. Non-exchangeable H deuteration file = run_0/sascalc/neutron_D2Op_80/HDexchange_Info_D2Op_80.txt
+10. Exchangeable H deuteration file = run_0/sascalc/neutron_D2Op_80/Deuteration_Info_D2Op_80.txt
+11. PDB output file with explicit D atoms = run_0/sascalc/neutron_D2Op_80/D2Op_80.pdb
+12. I(q) .vs. q file = run_0/sascalc/neutron_D2Op_80/run_0_00020.iq
+13. Number of golden vectors used = 35
+14. Io =      1.000
+15. Center of Mass = -24.41, y: -20.80, z: 4.57 (contrast-dependent)
+16. Rg = 61.968460 A (contrast-dependent)

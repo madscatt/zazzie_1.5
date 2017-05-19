@@ -1,0 +1,12 @@
+DONE move group generation to monte_carlo.py
+
+DONE include defining protein-specific group initialization
+
+NEXT: get dihedral rotate working ... hide clunky details
+        --> add pyobject overlap extension
+        --> implement go-back
+        --> evaluate new post-cluster definition of moves etc.
+            --> if TRUE: then do it
+
+
+
