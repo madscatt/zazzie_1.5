@@ -7,23 +7,31 @@ installation script below.
 
 ### Python and required associated libraries:
 
-python 2.7
-numpy
-scipy
-sasmol
+[python 2.7](https://www.python.org/downloads/release/python-2712/)
+
+[numpy](https://www.scipy.org/scipylib/download.html)
+
+[scipy](https://www.scipy.org/scipylib/download.html)
+
+[sasmol](https://github.com/madscatt/sasmol)
 
 ### Simulation and Modeling Engines:
 
-NAMD
-APBS
-PDB2PQR
-ROSETTA
-PYROSETTA
+[NAMD 2.12 multicore-cuda](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=NAMD)
+
+[APBS](http://www.poissonboltzmann.org/docs/downloads/)
+
+[PDB2PQR](http://www.poissonboltzmann.org/docs/downloads/)
+
+[ROSETTA](https://www.rosettacommons.org/software/license-and-download)
+
+[PYROSETTA](https://www.rosettacommons.org/software/license-and-download)
 
 ### Compilation and run-time libraries:
 
-GCC/G++
-CUDA 
+[GCC/G++ with C++11 support](https://gcc.gnu.org/viewcvs/gcc/branches/)
+
+[CUDA 8.0](https://developer.nvidia.com/cuda-downloads) 
 
 ### EDIT THE FOLLOWING FILE TO PROVIDE INFORMATION REGARDING DEPENENCIES
 
