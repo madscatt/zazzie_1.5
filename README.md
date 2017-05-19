@@ -18,19 +18,24 @@ installation script below.
 ### Simulation and modeling engines:
 
 [NAMD 2.12 multicore-cuda](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=NAMD)
-    #### required for simulate/energy minimization
+   
+    * required for simulate/energy minimization
 
 [APBS](http://www.poissonboltzmann.org/docs/downloads/)
-    #### required for analyze/apbs
+
+    * required for analyze/apbs
 
 [PDB2PQR](http://www.poissonboltzmann.org/docs/downloads/)
-    #### required for analyze/apbs
+   
+    * required for analyze/apbs
 
 [ROSETTA](https://www.rosettacommons.org/software/license-and-download)
-    #### required for build/pdbrx and analyze/sas_dock
+    
+    * required for build/pdbrx and analyze/sas_dock
 
 [PYROSETTA](https://www.rosettacommons.org/software/license-and-download)
-    #### required for build/pdbrx and analyze/sas_dock
+    
+    * required for build/pdbrx and analyze/sas_dock
 
 ### Compilation and run-time libraries:
 
