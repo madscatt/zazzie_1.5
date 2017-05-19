@@ -2,7 +2,8 @@
 
 ## Branch for development of HPC deployment version of "zazzie" 
 
-The following dependencies need to be installed prior to installation
+The following dependencies need to be installed prior to running the
+installation script below.
 
 ### Python and required associated libraries:
 
