@@ -5,7 +5,7 @@
 The following dependencies need to be installed prior to running the
 installation script below.
 
-### Python and required associated libraries:
+### Python and required modules/libraries:
 
 [python 2.7](https://www.python.org/downloads/release/python-2712/)
 
@@ -15,17 +15,22 @@ installation script below.
 
 [sasmol](https://github.com/madscatt/sasmol)
 
-### Simulation and Modeling Engines:
+### Simulation and modeling engines:
 
 [NAMD 2.12 multicore-cuda](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=NAMD)
+    #### required for simulate/energy minimization
 
 [APBS](http://www.poissonboltzmann.org/docs/downloads/)
+    #### required for analyze/apbs
 
 [PDB2PQR](http://www.poissonboltzmann.org/docs/downloads/)
+    #### required for analyze/apbs
 
 [ROSETTA](https://www.rosettacommons.org/software/license-and-download)
+    #### required for build/pdbrx and analyze/sas_dock
 
 [PYROSETTA](https://www.rosettacommons.org/software/license-and-download)
+    #### required for build/pdbrx and analyze/sas_dock
 
 ### Compilation and run-time libraries:
 
@@ -37,6 +42,8 @@ installation script below.
 
 trunk/sassie/util/sasconfig.py
 
+Missing dependencies and/or configuration errors will disable module(s) listed
+for each depenency above.
 
 ### SASSIE INSTALLATION:
 
@@ -44,5 +51,5 @@ To install:
 
 python installer.py
 
-this will install sassie these additional dependencies that are provided in the distribution and compile CUDA and other required python extensions
+this will install sassie these additional dependencies that are provided in the distribution and compile CUDA and other required python extensions.
 
