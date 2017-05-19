@@ -1,2 +1,0 @@
-#g++ -O3 -Wc++11-extensions --std=c++11 xtal2sas.cpp -o xtal2sas.exe
-g++ -O4  -g -Wall xtal2sas.cpp -D NDEBUG -o xtal2sas.exe -Wc++11-extensions --std=c++11
