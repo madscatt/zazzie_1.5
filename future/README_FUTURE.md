@@ -21,6 +21,22 @@ installation script below.
    
     * required for simulate/energy minimization
 
+[APBS](http://www.poissonboltzmann.org/docs/downloads/)
+
+    * required for analyze/apbs
+
+[PDB2PQR](http://www.poissonboltzmann.org/docs/downloads/)
+   
+    * required for analyze/apbs
+
+[ROSETTA](https://www.rosettacommons.org/software/license-and-download)
+    
+    * required for build/pdbrx and analyze/sas_dock
+
+[PYROSETTA](https://www.rosettacommons.org/software/license-and-download)
+    
+    * required for build/pdbrx and analyze/sas_dock
+
 ### Compilation and run-time libraries:
 
 [GCC/G++ with C++11 support](https://gcc.gnu.org/viewcvs/gcc/branches/)
