@@ -25,8 +25,6 @@ installation script below.
 
 [GCC/G++ with C++11 support](https://gcc.gnu.org/viewcvs/gcc/branches/)
 
-[boost](http://www.boost.org) 
-
 [CUDA 8.0](https://developer.nvidia.com/cuda-downloads) 
 
 ### EDIT THE FOLLOWING FILE TO PROVIDE INFORMATION REGARDING DEPENENCIES

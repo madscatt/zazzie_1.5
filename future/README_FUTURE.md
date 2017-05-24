@@ -43,6 +43,8 @@ installation script below.
 
 [CUDA 8.0](https://developer.nvidia.com/cuda-downloads) 
 
+[boost](http://www.boost.org)
+
 ### EDIT THE FOLLOWING FILE TO PROVIDE INFORMATION REGARDING DEPENENCIES
 
 trunk/sassie/util/sasconfig.py
