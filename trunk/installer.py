@@ -275,8 +275,58 @@ def install_toppar(logfile, current_path, install_path):
     return
 
 
+def modify_sascalc_library_makefile(logfile):
+
+    log(logfile, 'writing new Makefile with data in sasconfig.py')
+
+    original_makefile = 'sassie/calculate/sascalc/sascalc_library/cpp_and_cuda_source/Makefile'
+    new_makefile = 'sassie/calculate/sascalc/sascalc_library/cpp_and_cuda_source/Makefile_new'
+
+    os.system('cp '+ original_makefile + ' ' + original_makefile + '_backup')
+
+    lines = [] 
+
+    lines.append('INCDIR=-I' + sasconfig.__cuda_include_directory__ + '\n')
+    lines.append('CC=' + sasconfig.__cuda_gpp__ + '\n')
+    lines.append('NVCC=' + sasconfig.__cuda_nvcc__ + '\n')
+
+    with open(original_makefile, 'r') as original_file:
+        with open(new_makefile, 'w') as new_file:
+            for line in lines:
+                new_file.write(line)
+            new_file.write(original_file.read()) 
+
+    os.rename(new_makefile, original_makefile)
+
+    return
+
+def compile_sascalc_library(logfile, current_path):
+
+    sascalc_library_path = current_path + '/sassie/calculate/sascalc/sascalc_library'
+    sascalc_cpp_and_cuda_source = sascalc_library_path + '/cpp_and_cuda_source'
+
+    os.chdir(sascalc_cpp_and_cuda_source)
+
+    result = os.popen('mkdir lib').readlines()
+    for line in result:
+        log(logfile, line)
+
+    result = os.popen('make').readlines()
+    for line in result:
+        log(logfile, line)
+
+
+
+    return
+
 def compile_extensions(logfile, current_path, python):
 
+    
+    modify_sascalc_library_makefile(logfile)
+    compile_sascalc_library(logfile, current_path)
+
+
+    '''
     spath = current_path + '/sassie/sasmol/'
     path = current_path + '/sassie/sasmol/extensions/'
     dpath = path + 'dcdio/'
@@ -366,6 +416,8 @@ def compile_extensions(logfile, current_path, python):
         print "matrix_math.so did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n"
         sys.exit()
 
+    '''
+
     return
 
 
@@ -388,7 +440,7 @@ def compile_sassie(logfile, current_path, python):
 def install_sassie(logfile, os_type, current_path, install_path, python):
 
     install_toppar(logfile, current_path, install_path)
-   # compile_extensions(logfile, current_path, python)
+    compile_extensions(logfile, current_path, python)
    # compile_sassie(logfile, current_path, python)
 
     return
