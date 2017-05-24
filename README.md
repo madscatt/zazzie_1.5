@@ -17,6 +17,10 @@ installation script below.
 
 ### Simulation and modeling engines:
 
+[CHARMM-Lite](http://charmm.chemistry.harvard.edu)
+
+    * required for simulate/torsion angle molecular dynamics
+
 [NAMD 2.12 multicore-cuda](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=NAMD)
    
     * required for simulate/energy minimization
