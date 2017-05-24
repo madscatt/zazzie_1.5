@@ -4,42 +4,51 @@ import os
 ###     BEGIN SYSADMIN EDIT ###
 ###     BEGIN SYSADMIN EDIT ###
 
-#__arch__ = "cluster"
-__arch__ = "mac"
-# __arch__ = "linux"
-
-__cuda__ = False
-#__cuda__ = True
-
-# total memory for single GPU card (4799 MiB) Tesla K20m
-__gpu_memory__ = 4799
+## DEBUG LEVEL 
 
 # __level__ = 'WARNING'
 __level__ = 'DEBUG'
 
+## INSTALLATION PATH
+
+__installation_path__ = '/share/apps/local'
+__installation_bin_path__ = '/share/apps/local/bin'
+
+## CUDA DEFINITIONS ###
+
+#__cuda__ = False
+__cuda__ = True
+__cuda_path__ = '/share/apps/local/cuda'
+
+__cuda_include_directory__ = '/share/apps/local/cuda/include'
+__cuda_nvcc__ = '/share/apps/local/cuda/bin/nvcc'
+__cuda_gpp__ = '/usr/bin/g++'
+
+# total on-board memory for single GPU card (4799 MiB) Tesla K20m
+__gpu_memory__ = 4799
+
+
 ###     END SYSADMIN EDIT ###
 ###     END SYSADMIN EDIT ###
 ###     END SYSADMIN EDIT ###
 
 
-if __arch__ == "cluster":
+### THE FOLLOWING NEEDS TO BE CLEANED UP
+### THE FOLLOWING NEEDS TO BE CLEANED UP
+### THE FOLLOWING NEEDS TO BE CLEANED UP
 
-    installation_bin_path = ['share','apps','local','bin']
-    __core_libraries_include__ = [os.path.join(os.path.sep, 'share', 'apps', 'local', 'core_libraries', 'include')]
-    __core_libraries_lib__ = [os.path.join(os.path.sep, 'share', 'apps', 'local', 'core_libraries', 'lib')]
+#__bin_path__ = os.path.join(os.path.sep,*installation_bin_path)
+__bin_path__ = __installation_bin_path__
 
-    if __cuda__:
-        __cuda_path__ = os.path.join(os.path.sep, 'share', 'apps', 'local', 'cuda-6.5')
-else:
 
-    installation_bin_path = ['usr','local','bin']
-    __core_libraries_include__ = [os.path.join(os.path.sep, 'usr', 'local', 'core_libraries', 'include')]
-    __core_libraries_lib__ = [os.path.join(os.path.sep, 'usr', 'local', 'core_libraries', 'lib')]
+### THE FOLLOWING NEEDS TO BE RE-WORKED WITH SETUP.PY IN MIND
+### THE FOLLOWING NEEDS TO BE RE-WORKED WITH SETUP.PY IN MIND
+### THE FOLLOWING NEEDS TO BE RE-WORKED WITH SETUP.PY IN MIND
 
-    if __cuda__:
-        __cuda_path__ = os.path.join(os.path.sep, 'usr', 'local', 'cuda-6.5')
+__core_libraries_include__ = [os.path.join(os.path.sep, 'share', 'apps', 'local', 'core_libraries', 'include')]
+__core_libraries_lib__ = [os.path.join(os.path.sep, 'share', 'apps', 'local', 'core_libraries', 'lib')]
 
-__bin_path__ = os.path.join(os.path.sep,*installation_bin_path)
+
 
 
 
