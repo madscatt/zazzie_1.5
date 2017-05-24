@@ -12,6 +12,9 @@ import time
 import getpass
 import readline
 
+sys.path.append('./sassie/util/')
+import sasconfig
+
 #       INSTALLER
 #
 #       09/05/2011      --      initial coding              :   jc
@@ -98,13 +101,15 @@ def determine_os(logfile, install_path, current_path):
         except:
             log(logfile, 'could not determine glib used to compile current python')
 
-        if(distname == "Ubuntu" and version == "14.04"):
+        if(distname == "debian" and version == "jessie/sid"):
             supported_flag = 'YES'
             python = sys.executable
             log(logfile, 'installing using PYTHON = '+sys.executable)
         else:
             error = 'this installer does not handle your OS'
             log(logfile, error)
+            log(logfile, 'distname = ' + distname)
+            log(logfile, 'version = ' + version)
             print_error(logfile, error)
 
         os_type = [local_os_type, distname, version, platform.architecture()[
@@ -188,9 +193,10 @@ def apt_install(logfile, program):
 def ubuntu_dependencies(logfile, current_path, install_path, version):
 
     os_type = "Ubuntu"
+    os_type = "Linux"
 
     log(logfile, ' >> checking Ubuntu installation\n')
-    if(version == '14.04'):
+    if(version == 'jessie/sid'):
         files_to_check = ['gcc', 'g++', 'gfortran',
                           'swig']
 
@@ -223,17 +229,20 @@ def ubuntu_dependencies(logfile, current_path, install_path, version):
     #    log(logfile, 'appending line to sources.list : ' + source)
     #sourcefile.close()
 
-    if(version == '14.04'):
-        #            programs_needed.append('gnuplot-x11')
-        programs_needed.append('libx32z1')
-        programs_needed.append('libx32ncurses5')
-        programs_needed.append('libbz2-dev')
+    if(version == 'jessie/sid'):
+        ##            programs_needed.append('gnuplot-x11')
+        #programs_needed.append('libx32z1')
+        #programs_needed.append('libx32ncurses5')
+        #programs_needed.append('libbz2-dev')
         bit = platform.architecture()[0]
 
-    for program in programs_needed:
-        error = apt_install(logfile, program)
-        if(len(error) > 0):
-            print 'error = ', error
+    print 'APT NOT ENABLED'
+    print 'programs needed = ', programs_needed
+
+    #for program in programs_needed:
+    #    error = apt_install(logfile, program)
+    #    if(len(error) > 0):
+    #        print 'error = ', error
 
     return
 
@@ -241,8 +250,10 @@ def ubuntu_dependencies(logfile, current_path, install_path, version):
 def check_and_install_dependices(logfile, os_type, current_path, install_path):
 
     log(logfile, '\nCHECKING AND INSTALLING DEPENDENCIES\n')
-    if(os_type[1] == 'Ubuntu'):
+    if(os_type[1] == 'debian'):
         ubuntu_dependencies(logfile, current_path, install_path, os_type[2])
+    else:
+        log(logfile, 'unable to install dependencies for os_type[1] = ' + os_type[1])
 
     return
 
@@ -378,7 +389,7 @@ def install_sassie(logfile, os_type, current_path, install_path, python):
 
     install_toppar(logfile, current_path, install_path)
    # compile_extensions(logfile, current_path, python)
-    compile_sassie(logfile, current_path, python)
+   # compile_sassie(logfile, current_path, python)
 
     return
 
@@ -441,10 +452,12 @@ def preamble(logfile):
     log(logfile, 'current directory : ' + current_path)
     log(logfile, 'hostname : ' + platform.node() + '\n')
 
-    # s if(user != "root"):
-    # s 	print_error(logfile,'\n\nYOU MUST RUN THIS SCRIPT AS ROOT\n\n')
-    # s 	log(logfile,'\n\nINSTALLATION STOPPING NOW\n\n')
-    # s 	sys.exit()
+    if(user != "root"):
+        print_error(logfile,'\n\nYOU MUST RUN THIS SCRIPT AS ROOT\n\n')
+        log(logfile,'\n\nINSTALLATION STOPPING NOW\n\n')
+        sys.exit()
+
+    install_path = sasconfig.__installation_bin_path__
 
     log(logfile, '\n >> NOTE: This script will compile and install software')
     log(logfile, '\n >> Several dependencies are required to be installed\n \
@@ -452,13 +465,11 @@ def preamble(logfile):
       for instructions\n')
     log(logfile, ' >> Redistributed software is open-source and existing license terms remain in effect\n\n')
     log(logfile, ' >> The software will be installed in')
-    log(logfile, '\n /share/apps/local/bin \n\n')
+    log(logfile, '\n ' + install_path + '\n\n')
 
-    install_path = '/share/apps/local/bin'
-
-    st1 = '\n >> press (0) to quit or (1) to continue or (2) to change installation path\n'
+    st1 = '\n >> press (0) to quit or (1) to continue \n'
     decide = ""
-    while(decide != "0" and decide != "1" and decide != "2"):
+    while(decide != "0" and decide != "1"):
         decide = raw_input(st1)
 
     if(decide == "0"):
@@ -467,7 +478,7 @@ def preamble(logfile):
     elif(decide == "1"):
         error = check_path(install_path)
         if(len(error) > 0):
-            err = 'Default installation in /share/apps/local/bin is not valid : '
+            err = 'Default installation in ' + install_path + ' is not valid : '
             err += error[0]
             print_error(logfile, err)
             createpath = ""
@@ -483,28 +494,10 @@ def preamble(logfile):
                         log(logfile, line)
                 except:
                     log(logfile, '\n > could not make that directory')
-
-                    log(logfile, '\n\n >> trying original option (2)\n\n')
-                    decide = "2"
-            else:
-                log(logfile, '\n\n >> trying original option (2)\n\n')
-                decide = "2"
-
-    if(decide == "2"):
-        pathinput = ""
-        st2 = '\n >> enter path for installation: '
-        while(pathinput != "1"):
-            newpath = raw_input(st2)
-            error = check_path(newpath)
-            if(len(error) == 0):
-                pathinput = "1"
-            else:
-                print_error(logfile, error[0])
-        log(logfile, '\n >> alternate installation path chosen : ' + newpath)
-        install_path = newpath
-
+                    log(logfile, '\n\nSTOPPING INSTALLATION NOW\n\n')
+                    sys.exit()
+                    
     return current_path, install_path
-
 
 def epilogue(logfile, os_type):
 
@@ -520,11 +513,11 @@ def install_me():
 
     os_type, python = determine_os(logfile, install_path, current_path)
 
-    sys.exit()
-
     check_and_install_dependices(logfile, os_type, current_path, install_path)
 
     install_sassie(logfile, os_type, current_path, install_path, python)
+
+    sys.exit()
 
     test_installation(logfile, os_type)
 
