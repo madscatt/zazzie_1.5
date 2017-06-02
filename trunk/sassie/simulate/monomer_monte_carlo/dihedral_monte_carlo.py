@@ -17,7 +17,10 @@
 import os,sys,string,locale,time,platform
 import numpy
 import random
-import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+try:
+    import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+except:
+    pass
 import sasmol.sasmol as sasmol
 import sassie.simulate.constraints.constraints as constraints
 import sassie.simulate.energy.dihedral_energy as dihedral_energy
@@ -700,8 +703,8 @@ if __name__=='__main__':
 		directedmc = '0'
 		psffilepath='./'
 		psffilename='refgag.psf'
-		import sassie.sasconfig as sasconfig
-		parmfilepath=sasconfig._bin_path+'toppar'
+		import sassie.util.sasconfig as sasconfig
+		parmfilepath=sasconfig.__bin_path__+'toppar'
 		parmfilename='par_all27_prot_na.inp'
 		plotflag = '0'
 		seed = '0,123'
