@@ -1,24 +1,20 @@
 # System imports
 from distutils.core import *
-import os, platform
+import os, sys, platform
 
-os_type = platform.system()
+sys.path.append('../../../../util')
+import sasconfig
 
-#os.environ["CC"] = "g++"
+cuda_dir = sasconfig.__cuda_path__
+cuda_include_dir = sasconfig.__cuda_include_path__
+cuda_lib_dir = sasconfig.__cuda_lib_path__
 
-### USER EDIT
-cpp_buildingBlock_dir=os.path.join('..','cpp_and_cuda_buildBlock')
-cuda_buildingBlock_dir=os.path.join('..','cpp_and_cuda_buildBlock')
-
-### END USER EDIT
+cpp_source_dir=os.path.join('..','cpp_and_cuda_source')
+cuda_source_dir=os.path.join('..','cpp_and_cuda_source')
 
 cpp_library_name = 'sascalc'
 cuda_library_name = 'cudaSascalc'
 
-if os_type == "Darwin":
-    cuda_dir = os.path.join(os.path.sep,'usr','local','cuda')
-elif os_type == "Linux":
-    cuda_dir = os.path.join(os.path.sep,'share','apps','local','cuda')
 
 # Third-party modules - we depend on numpy for everything
 import numpy
@@ -36,12 +32,12 @@ if os.path.isdir(cuda_dir):
 else:
     cuda_driver = False 
 
-if os.path.isfile(os.path.join(cpp_buildingBlock_dir,'lib','libsascalc.a')):
+if os.path.isfile(os.path.join(cpp_source_dir,'lib','libsascalc.a')):
     cpp_lib = True
 else:
     cpp_lib = False
 
-if os.path.isfile(os.path.join(cuda_buildingBlock_dir,'lib','libcudaSascalc.a')):
+if os.path.isfile(os.path.join(cuda_source_dir,'lib','libcudaSascalc.a')):
     cuda_lib = True
 else:
     cuda_lib = False
@@ -62,20 +58,19 @@ cuda_driver = False
 cuda_lib = False
 
 if cpp_lib:
-    include_dir_names.append(os.path.join(cpp_buildingBlock_dir,'src')) #include'))
-    library_dir_names.append(os.path.join(cpp_buildingBlock_dir,'lib'))
+    include_dir_names.append(os.path.join(cpp_source_dir,'src')) 
+    library_dir_names.append(os.path.join(cpp_source_dir,'lib'))
     library_names.append(cpp_library_name)
     macros.append(('CPP_LIB','1'))
 if cuda_driver:
-    include_dir_names.append(os.path.join(cuda_dir,'include'))
-    #library_dir_names.append(os.path.join(cuda_dir,'lib64'))
-    library_dir_names.append(os.path.join(cuda_dir,'lib'))
+    include_dir_names.append(cuda_include_dir)
+    include_dir_names.append(cuda_lib_dir)
     library_names.append('cuda')
     library_names.append('cudart')
     macros.append(('CUDA_DRIVER','1'))
 if cuda_lib:
-    include_dir_names.append(os.path.join(cuda_buildingBlock_dir,'src')) #include'))
-    library_dir_names.append(os.path.join(cuda_buildingBlock_dir,'lib'))
+    include_dir_names.append(os.path.join(cuda_source_dir,'src')) 
+    library_dir_names.append(os.path.join(cuda_source_dir,'lib'))
     library_names.append(cpp_library_name) #ZHL hack
     library_names.append(cuda_library_name)
     macros.append(('CUDA_LIB','1'))
@@ -86,7 +81,7 @@ else:
     macros.append(('USE_CPU','1'))
 
 # extension module
-sascalc_api = Extension(name="sascalc_api",sources=['sascalc_api_extension.cpp'],
+    sascalc_api = Extension(name="sassie.calculate.sascalc.sascalc_library.cpp_extension.sascalc_api",sources=['sascalc_api_extension.cpp'],
                     include_dirs = include_dir_names,
                     library_dirs = library_dir_names,
                     libraries = library_names,
@@ -96,7 +91,7 @@ sascalc_api = Extension(name="sascalc_api",sources=['sascalc_api_extension.cpp']
 # setup
 setup(  name        = "sascalc_api",
         description = "Module for sascalc_api",
-        author      = "Hailiang Zhang",
+        author      = "Joseph E. Curtis",
         ext_modules = [sascalc_api]
         )
 

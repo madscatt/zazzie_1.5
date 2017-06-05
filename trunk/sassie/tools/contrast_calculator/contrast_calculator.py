@@ -23,7 +23,11 @@ from scipy import stats
 #for formula parser
 from re import findall
 #-------------------
-import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils  #for plotting
+try:
+    import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils  #for plotting
+
+except:
+    pass
 
 #       CONTRAST
 #

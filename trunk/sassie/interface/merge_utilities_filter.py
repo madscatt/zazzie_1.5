@@ -44,8 +44,8 @@ def check_merge_utilities(variables,**kwargs):
     if merge_type_option not in [0,1,2]:
         error.append('merge_type option needs to be 0, 1, or 2, you entered : '+str(merge_type_option))
         return error
-    if sas_type not in [1,2,3]:
-        error.append('sas type needs to be 1, 2, or 3, you entered : '+str(sas_type))
+    if sas_type not in [0,1,2,3]:
+        error.append('sas type needs to be 0, 1, 2, or 3, you entered : '+str(sas_type))
         return error
 
     ## check for pdb/dcd files
@@ -68,12 +68,16 @@ def check_merge_utilities(variables,**kwargs):
             #error.append('input pdb file, '+pdb_file+', does not exist')
             return error
         ev,value=input_filter.check_pdb_dcd(pdb_file,'pdb')
-        if(ev == 0):
-            error.append('check input pdb file: '+pdb_file)
-            return error
+# if file doesn't exist (ev = 0), error is returned from check_file_exists above.  So, tests won't get to this if stmt.
+#        if(ev == 0):
+#            error.append('check input pdb file: '+pdb_file)
+#            return error
         if(value == 0):
             error.append( 'input pdb file, '+pdb_file+', is not a valid pdb file')
             return error
+
+# exception below not tested since other tests failed before reaching this point; if this point is reached, file is read successfully
+# kept exception just in case
         try:
             m1 = sasmol.SasMol(0)
             m1.read_pdb(pdb_file)
@@ -94,10 +98,11 @@ def check_merge_utilities(variables,**kwargs):
             if trajectory_file[-3:] == 'dcd':
                 infile_type = 'dcd'
                 ev,value=input_filter.check_pdb_dcd(trajectory_file,'dcd')
-                if(ev == 0):
-                    error.append('check input trajectory filename : '+trajectory_file)
-                    return error
-                elif(value == 0):
+# if file doesn't exist (ev = 0), error is returned from check_file_exists above.  So, tests won't get to this if stmt.
+#                if(ev == 0):
+#                    error.append('check input trajectory filename : '+trajectory_file)
+#                    return error
+                if(value == 0):
                     error.append( 'input trajectory file, '+trajectory_file+', is not a valid dcd file')
                     return error
 
@@ -109,18 +114,22 @@ def check_merge_utilities(variables,**kwargs):
             elif trajectory_file[-3:] == 'pdb':
                 infile_type = 'pdb'
                 ev,value=input_filter.check_pdb_dcd(trajectory_file,'pdb')
-                if(ev == 0):
-                    error.append('check input trajectory filename : '+trajectory_file)
-                    return error
-                elif(value == 0):
+# if file doesn't exist (ev = 0), error is returned from check_file_exists above.  So, tests won't get to this if stmt.
+#                if(ev == 0):
+#                    error.append('check input trajectory filename : '+trajectory_file)
+#                    return error
+                if(value == 0):
                     error.append( 'input trajectory file, '+trajectory_file+', is not a valid pdb file')
                     return error
 
-                value=input_filter.certify_pdb_pdb(pdb_file,trajectory_file)
+#               certify_pdb_pdb returns both fileexist (ev) and value 
+                ev,value=input_filter.certify_pdb_pdb(pdb_file,trajectory_file)
                 if(value == 0):
                     error.append('input pdb file '+pdb_file+' and pdb file '+trajectory_file+', are not compatible')
                     return error
 
+# exception below not tested since other tests failed before reaching this point; if this point is reached, file is read successfully
+# kept exception just in case
             try:
                 m1 = sasmol.SasMol(0)
                 if infile_type == 'dcd':
@@ -141,23 +150,47 @@ def check_merge_utilities(variables,**kwargs):
     if merge_option in [0,1]:
         #
         sas_path_list = sas_paths.split(',') ## @NOTE to ZHL: !
+#        print 'sas_path_list in filter: ', sas_path_list
         if len(sas_path_list) != number_of_runs:
-            error.append('number of SAS folders "%d" does not match number of runs "%d"'%(len()))
+            error.append('number of SAS folders "%d" does not match number of runs "%d"'%(len(sas_path_list),number_of_runs))
             return error
-        #
-        if sas_type not in [1,2,3]:
-            error.append("sas_type %d not supported!"%sas_type)
-            return error
-        #
-        number_spec_files_list = []
-        for i,sas_path in enumerate(sas_path_list):
-            head, my_sas_type = os.path.split(sas_path)
-            dict_sas_type = {1:'sascalc', 2:'cryson', 3:'crysol'}
-            name_sas_type = dict_sas_type[sas_type]
-            if my_sas_type != name_sas_type:
-                error.append('the SAS type "'+name_sas_type+ '" you entered is not compatiable with the SAS type in the SAS data path you selected')
-                return error
+#The check below is covered in the first series of tests at the top of this file.  So, tests won't get to this stmt. 
+#        if sas_type not in [0,1,2,3]:
+#            error.append("sas_type %d not supported!"%sas_type)
+#            return error
 
+
+        sas_input_paths = [] 
+        number_spec_files_list = []
+        for sas_path in sas_path_list:
+               
+#            print 'sas_path in filter: ', sas_path
+#            print 'sas_type in filter: ', sas_type
+            base_paths = []
+
+            for root, dirs, files in os.walk(sas_path, topdown=False):
+                for name in dirs:
+#                    print(os.path.join(root, name))
+                    sas_input_paths.append(os.path.join(root, name))
+                    base_paths.append(os.path.basename(os.path.normpath(os.path.join(root, name))))
+
+
+#            print 'new_paths: ', sas_input_paths
+#            print 'base_paths: ', base_paths
+            if base_paths == []:
+                base_paths.append(os.path.basename(os.path.normpath(sas_path)))
+                sas_input_paths.append(sas_path)
+#            print 'base_paths = ', base_paths
+#            print 'new_paths = ', sas_input_paths
+        number_base_paths = len(base_paths)
+#        print 'sas_input_paths: ', sas_input_paths
+#        print 'number_base_paths: ', number_base_paths
+            
+
+        for i,sas_path in enumerate(sas_input_paths):
+#            print 'sas_path in input path: ', sas_path
+
+#need to test for existence of SAS path before checking for compatible files            
             ev,rv,wv=input_filter.check_permissions(sas_path)
             if(not ev or not rv):
                 error.append('permission error in input file path '+sas_path+'  [code = '+str(ev)+str(rv)+str(wv)+']')
@@ -166,32 +199,49 @@ def check_merge_utilities(variables,**kwargs):
                 elif(rv==False):
                     error.append('read permission not allowed for sas path "'+sas_path+'"')
                 return error
+            
+            head, my_sas_type = os.path.split(sas_path)
+            head1, my_sas_type1 = os.path.split(head)       #needed for sas_type = 0
+#            print 'my_sas_type: ', my_sas_type
+#            print 'my_sas_type1: ', my_sas_type1
+            dict_sas_type = {0:'sascalc', 1:'xtal2sas', 2:'cryson', 3:'crysol'}
+            name_sas_type = dict_sas_type[sas_type]
+            if my_sas_type != name_sas_type and my_sas_type1 != name_sas_type:
+                error.append('the SAS type "'+name_sas_type+ '" you entered is not compatiable with the SAS type in the SAS data path you selected')
+                return error
             #
-            if(sas_type==1):
+            if(sas_type==0):
+                suffix=['*.iq','*.log']
+                extra = []
+                name_sastype = 'sascalc'
+            elif(sas_type==1):
                 suffix=['*.iq','*.log']
                 extra = ['*.inf','*.crd','*.ans','*.pr']
+                name_sastype = 'xtal2sas'
             elif(sas_type==2):
                 suffix=['*.int','*.log']
                 extra = ['*.sav','*.flm','*.alm','*.ans']
+                name_sastype = 'cryson'
             elif(sas_type==3):
                 suffix=['*.int','*.log']
                 extra = ['*.sav','*.flm','*.alm','*.ans']
+                name_sastype = 'crysol'
             spec_files = glob.glob(os.path.join(sas_path,suffix[0]))
+#            print 'spec_files in filter: ',spec_files
             log_files = glob.glob(os.path.join(sas_path,suffix[1]))
-            #spec_files.sort()
-            #log_files.sort()
             extra_files_list = []
             for ex in extra:
-                #extra_files_list.append(glob.glob(os.path.join(sas_path,suffix[0])).sort())
                 extra_files_list.append(glob.glob(os.path.join(sas_path,suffix[0])))
             number_spec_files_list.append(len(spec_files))
+#            print 'number_spec_files_in_filter: ', number_spec_files_list
             #
             if merge_option == 0:
-                if number_spec_files_list[i] != number_of_frames_list[i]:
-                    error.append('number of SAS files in folder "%s" does not match number of frames of the PDB/DCD file in "%s"'%(sas_path, trajectory_name_list[i]))
-
+#need to test for no scattering files before testing for wrong number of scattering files
                 if number_spec_files_list[i]==0:
-                    error.append("there is no scattering files found for the selected sas-type: '"+name_sastype+"' in folder: '"+sas_path+"'")
+                    error.append("there are no scattering files found for the selected sas-type: "+name_sastype+" in folder: "+sas_path)
+                    return error
+                if number_spec_files_list[i] != number_of_frames_list[int(i/number_base_paths)]:
+                    error.append('number of SAS files in folder "%s" does not match number of frames of the PDB/DCD file in "%s"'%(sas_path, trajectory_name_list[int(i/number_base_paths)]))
                     return error
 
     ## some general naming
@@ -220,16 +270,18 @@ def check_merge_utilities(variables,**kwargs):
             return error
         for j,weight_file in enumerate(weight_file_list):
             number_of_frames = number_of_frames_list[j]
+# exception below not tested since other tests failed before reaching this point
+# kept exception just in case
             try:
                 error=input_filter.check_file_exists(weight_file)
                 if(len(error) != 0):
                     #error.append('weight file does not exist :'+weight_file)
                     return error
             except:
-                error.append('weight file does not exist :'+weight_file)
+                error.append('error checking for existence of weight file :'+weight_file)
                 return error
-            #try:
-            if True:
+            try:
+            #if True:
                 infile = open(weight_file,'r').readlines()
                 frames = [] ; weights = []
                 for lin in infile:
@@ -256,16 +308,16 @@ def check_merge_utilities(variables,**kwargs):
 
                 for i in range(len(frames)):
                     if(frames[i] < 1):
-                        error.append('weight file colume 1 can only have positive integers : "'+str(frames[i])+'" was found in the weight file')
+                        error.append('weight file column 1 can only have positive integers : "'+str(frames[i])+'" was found in the weight file')
                         return error
                     if(frames[i] > number_of_frames):
-                        error.append('there are '+str(number_of_frames)+' '+units+' in "'+data_place_list[j]+'" : '+unit+' number '+str(frames[i])+' was found in the weight file')
+                        error.append('there are '+str(number_of_frames)+' '+units+' in your data path : '+unit+' number '+str(frames[i])+' was found in the weight file')
                         return error
                     if(i>0 and frames[i]==frames[i-1]):
                         error.append('redundant '+unit+' number "'+str(frames[i])+'" found in the weight file')
                         return error
-            #except:
-            else:
+            except:
+            #else:
                 error.append('encountered an unknown error reading weight_file: '+weight_file)
                 return error
     elif(merge_type_option == 2):
@@ -276,7 +328,7 @@ def check_merge_utilities(variables,**kwargs):
                 return error
             for j,number_of_frames in enumerate(number_of_frames_list):
                 if sampling_frequency > number_of_frames:
-                    error.append('the sampling frequency need to be smaller than the number of '+units+' in "'+data_place_list[j]+'" ("'+str(number_of_frames)+'") : you entered "'+local_value+'"')
+                    error.append('the sampling frequency needs to be smaller than the number of '+units+' in your data path : you entered "'+local_value+'"')
                     return error
         except:
             error.append('encountered an unknown error reading the sampling frequency : '+local_value)

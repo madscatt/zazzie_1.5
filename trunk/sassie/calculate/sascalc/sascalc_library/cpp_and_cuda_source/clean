@@ -1,0 +1,2 @@
+cp -f Makefile_backup Makefile
+rm -Rf lib

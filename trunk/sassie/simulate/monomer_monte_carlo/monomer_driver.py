@@ -1,4 +1,5 @@
 import sys
+import sassie.util.sasconfig as sasconfig
 
 def runme():
 
@@ -30,7 +31,7 @@ def runme():
         nbscale='1.0'
         psffilepath='./'
         psffilename='refgag.psf'
-        parmfilepath='/usr/local/bin/toppar/'
+        parmfilepath=sasconfig.__bin_path__+'/toppar/'
         parmfilename='par_all27_prot_na.inp'
         
         directedmc = '0.0'

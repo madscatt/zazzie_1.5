@@ -16,8 +16,10 @@
 '''
 import os,string,locale,time,platform
 import numpy
-import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
-
+try:
+    import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+except:
+    pass
 
 #       INTERPOLATE
 #
