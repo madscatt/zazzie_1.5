@@ -3,6 +3,7 @@ import multiprocessing
 import sassie.interface.input_filter as input_filter
 import sassie.interface.energy_minimization_filter as energy_minimization_filter
 import sassie.simulate.energy_minimization.namd_minimize as namd_minimize
+import sassie.util.sasconfig as sasconfig
 
 class Drv():
 
@@ -21,8 +22,7 @@ class Drv():
       pdbfile = 'ten_mer.pdb'
       outfile = 'min_run_0.dcd'
       nsteps = '1000'
-      parmfile = '/share/apps/local/bin/toppar/par_all27_prot_na.inp'
-      parmfile = '/usr/local/bin/toppar/par_all27_prot_na.inp'
+      parmfile = sasconfig.__bin_path__+'/toppar/par_all27_prot_na.inp'
       psffile = 'refgag.psf'
       psffile = 'ten_mer.psf'
       ncpu = '2'

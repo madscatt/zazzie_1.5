@@ -23,7 +23,9 @@ import subprocess
 from write_namd_input import *
 from sassie.simulate.energy_minimization.prepend_namd_input import *
 import sasmol.sasmol as sasmol
-import sassie.util.sasconfig as sasconfig
+
+sys.path.append('../../util/')
+import sasconfig as sasconfig
 
 #       NAMD_MINIMIZE
 #
@@ -251,6 +253,8 @@ def minimize(variables, txtOutput):
                 if(ncpu == 1 or not sasconfig.__arch__ == "cluster"):
                     tout2 = os.popen(
                         'tail -15 junk.out | grep "Program finished"', 'r').readlines()
+                    tout3 = os.popen(
+                        'tail -15 junk.out | grep "End of Program"', 'r').readlines()
                 else:
                     tout2 = os.popen(
                         'tail -15 junk.out | grep "WallClock:"', 'r').readlines()
@@ -267,7 +271,7 @@ def minimize(variables, txtOutput):
                     tout2 = os.popen(
                         'tail -15 junk.out | grep "WallClock:"', 'r').readlines()
 
-            if(len(tout2) > 0):
+            if(len(tout2) > 0 or len(tout3) > 0):
                 print 'finished minimization'
                 run = 0
             if(len(fail_check) > 0):

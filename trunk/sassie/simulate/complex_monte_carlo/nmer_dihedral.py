@@ -18,7 +18,10 @@
 import os,sys,string,locale,bisect,random,time,platform
 import numpy
 import random
-import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+try:
+    import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+except:
+    pass
 import sasmol.sasmol as sasmol
 import sassie.simulate.constraints.constraints as constraints
 import sassie.simulate.monomer_monte_carlo.dihedral_monte_carlo as dihedral

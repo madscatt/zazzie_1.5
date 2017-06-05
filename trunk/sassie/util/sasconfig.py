@@ -36,4 +36,6 @@ __gpu_memory__ = 4799
 __bin_path__ = __installation_bin_path__
 
 
+__arch__ = "cluster"
+__arch__ = "linux"
 
