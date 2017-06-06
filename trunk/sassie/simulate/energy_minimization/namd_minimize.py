@@ -216,30 +216,16 @@ def minimize(variables, txtOutput):
         ttime = time.ctime()
         runstring = vers + ' : ' + outfile + ' run stated at : ' + ttime
         print runstring
-        print 'starting namd minimization'
-        #bin_path = sasconfig._bin_path
+        print 'starting namd'
         bin_path = sasconfig.__bin_path__ + os.sep
-        if(ncpu == 1):
-            #nst='/usr/local/bin/namd/namd2 temp.inp >& junk.out &'
-            nst = bin_path + 'namd/namd2 temp.inp >& junk.out &'
-            print '> nst = ', nst
-        else:
-            print '\n> using ' + str(ncpu) + ' cpus\n'
-            #nst='/usr/local/bin/namd/charmrun +p'+str(ncpu)+' /usr/local/bin/namd/namd2 temp.inp >& junk.out &'
-            #if sasconfig.__cluster__:
-            if sasconfig.__arch__ == "cluster" :
-                nst = bin_path + 'namd/charmrun +p' + \
-                    str(ncpu) + ' ++remote-shell ssh ' + bin_path + \
-                    'namd/namd2 temp.inp >& junk.out &'
-            else:
-                nst = bin_path + 'namd/charmrun +p' + \
-                    str(ncpu) + ' ' + bin_path + \
-                    'namd/namd2 temp.inp >& junk.out &'
+        nst = bin_path + sasconfig.__namd_run_command__ + ' ' + sasconfig.__namd_run_additional_arguments__ + ' +p' + str(ncpu) + ' temp.inp >& junk.out &'
 
         p = subprocess.Popen(nst, shell=True, executable='/bin/bash')
         sts = os.waitpid(p.pid, 0)[1]
         print 'p.pid = ', p.pid
         thisjob = str(int(p.pid) + 1)
+
+        completion_string = sasconfig.__namd_completion_string__
 
         run = 1
         esteps = 0
@@ -250,15 +236,8 @@ def minimize(variables, txtOutput):
             stls = string.split(lsfile[0])
             nstls = locale.atoi(stls[0])
             if(nstls > 0):
-                if(ncpu == 1 or not sasconfig.__arch__ == "cluster"):
-                    tout2 = os.popen(
-                        'tail -15 junk.out | grep "Program finished"', 'r').readlines()
-                    tout3 = os.popen(
-                        'tail -15 junk.out | grep "End of Program"', 'r').readlines()
-                else:
-                    tout2 = os.popen(
-                        'tail -15 junk.out | grep "WallClock:"', 'r').readlines()
-
+                check_completion = os.popen(
+                  'tail -15 junk.out | grep ' + completion_string, 'r').readlines()
                 fail_check = os.popen(
                     'tail -200 junk.out | grep "Abort"', 'r').readlines()
                 if len(fail_check) == 0:
@@ -267,11 +246,8 @@ def minimize(variables, txtOutput):
                 if len(fail_check) == 0:
                     fail_check = os.popen(
                         'tail -200 junk.out | grep "ERROR: Exiting prematurely"', 'r').readlines()
-                if(ncpu > 1 and sasconfig.__arch__ == "cluster"):
-                    tout2 = os.popen(
-                        'tail -15 junk.out | grep "WallClock:"', 'r').readlines()
 
-            if(len(tout2) > 0 or len(tout3) > 0):
+            if(len(check_completion) > 0):
                 print 'finished minimization'
                 run = 0
             if(len(fail_check) > 0):

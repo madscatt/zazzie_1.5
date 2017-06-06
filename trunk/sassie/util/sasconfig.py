@@ -29,13 +29,35 @@ __cuda_gpp__ = '/usr/bin/g++'
 # total on-board memory for single GPU card (4799 MiB) Tesla K20m
 __gpu_memory__ = 4799
 
+
+## NAMD CONFIGURATION 
+
+#(BASED ON NAMD 2.12 and default installation soft-link to __installation_bin_path__/namd)
+
+# NAMD MULTICORE
+
+__namd_run_command__ = 'namd/namd2'
+__namd_run_additional_arguments__ = ''
+__namd_completion_string__= 'WallClock:'
+
+
+# THE FOLLOWING OPTIONS NEED A DIFFERENT NAMD INSTALLATION THAN THAT PROVIDED BY THE INSTALLATION INSTRUCTIONS
+
+# NAMD LINUX OVER NETWORK (NOT USED IN DEFAULT INSTALLATION; NOT TESTED)
+
+#__namd_run_command__ = 'namd/charmrun namd/namd2'
+#__namd_run_additional_arguments__ = ''
+
+# NAMD CUDA (NOT USED IN DEFAULT INSTALLATION; NOT TESTED)
+
+#__namd_run_command__ = 'namd/namd2'
+#__namd_run_additional_arguments__ = '+setcpuaffinity +devices 0,1'
+
+
 ###     END SYSADMIN EDIT ###
 ###     END SYSADMIN EDIT ###
 ###     END SYSADMIN EDIT ###
 
 __bin_path__ = __installation_bin_path__
 
-
-__arch__ = "cluster"
-__arch__ = "linux"
 
