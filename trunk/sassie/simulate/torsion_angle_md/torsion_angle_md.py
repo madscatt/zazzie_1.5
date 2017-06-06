@@ -117,8 +117,9 @@ def process_input_variables(psegvariables, segname_molecules, filter_flag):
             all_srlow.append(psegvariables[i][2])
         else:
             this_srlow = psegvariables[i][2]
-            tmp_list = [int(val.strip()) + offset for val in this_srlow.split(',')]
-            new_list = ', '.join(str(x) for x in tmp_list) 
+            tmp_list = [int(val.strip()) +
+                        offset for val in this_srlow.split(',')]
+            new_list = ', '.join(str(x) for x in tmp_list)
             all_srlow.append(new_list)
         all_srnum.append(psegvariables[i][3])
         all_moltype.append(psegvariables[i][4])
@@ -345,7 +346,7 @@ def tamd(variables, psegvariables, txtOutput):
     fix_moltypes(segname_molecules, dna_segnames)
 
     #ttxt = time.ctime()
-    ttxt = time.asctime( time.gmtime( time.time() ) ) 
+    ttxt = time.asctime(time.gmtime(time.time()))
     st = ''.join(['=' for x in xrange(60)])
 
     txtOutput.put("\n%s \n" % (st))
