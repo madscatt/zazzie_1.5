@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 import os,sys,locale,string
-import sassie.sasmol.sasmol as sasmol
+import sasmol.sasmol as sasmol
 import sassie.simulate.constraints.constraints as constraints
 import input_filter
 
