@@ -20,7 +20,10 @@ import numpy
 import scipy.optimize
 import sassie.calculate.sld_mol.modified_scipy_interpolate as interpolate
 import sasmol.sasmol as sasmol
-import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+try:
+    import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+except:
+    pass
 #import matplotlib.pyplot as plt
 
 #       SLD_MOL
