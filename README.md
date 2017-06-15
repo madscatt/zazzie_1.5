@@ -15,6 +15,8 @@ installation script below.
 
 [sasmol](https://github.com/madscatt/sasmol)
 
+[pandoc](http://pandoc.org)
+
 ### Simulation and modeling engines:
 
 [CHARMM-Lite](http://charmm.chemistry.harvard.edu)
