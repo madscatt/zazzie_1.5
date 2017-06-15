@@ -22,16 +22,16 @@ def user_variables(self, **kwargs):
     ### BEGIN USER INPUT ###
 
     self.runname         = 'run_2'
-    self.infile          = 't.pdb'
-    self.pdbfile         = 't.pdb'
-    self.outfile         = 'test.dcd'
-    self.nsteps          = '200'
+    self.infile          = 'hiv1_gag_ma.pdb'
+    self.pdbfile         = 'hiv1_gag_ma.pdb'
+    self.outfile         = 'hiv1_gag_ma.dcd'
+    self.nsteps          = '10'
 
-    self.topfile         = '/share/apps/local/bin/toppar/top_all27_prot_na.inp'
-    self.parmfile        = '/share/apps/local/bin/toppar/par_all27_prot_na.inp'
+    self.topfile         = sasconfig.__bin_path__ + '/toppar/top_all27_prot_na.inp'
+    self.parmfile         = sasconfig.__bin_path__ + '/toppar/par_all27_prot_na.inp'
     self.keepout         = '1'
     self.dcdfreq         = '20'
-    self.charmmexe       = '/share/apps/local/bin/charmm.exe'
+    self.charmmexe       = sasconfig.__bin_path__ + '/charmm.exe'
     self.temperature     = '300.0'
     self.rgforce         = '0.0'
     self.rgvalue         = '0.0'
@@ -43,10 +43,10 @@ def user_variables(self, **kwargs):
     self.pretamd_min_steps = '100'
     self.poll_frequency = '10'
 
-    self.all_flexible_segnames=['PEP1']
+    self.all_flexible_segnames=['MA']
     self.all_snumranges=['1']
-    self.all_srlow=['2']
-    self.all_srnum=['4']
+    self.all_srlow=['114']
+    self.all_srnum=['20']
     self.all_moltype=['protein']
 
     self.psegvariables = []
