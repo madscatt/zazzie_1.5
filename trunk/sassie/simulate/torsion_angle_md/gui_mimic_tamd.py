@@ -7,7 +7,7 @@ import os
 import shutil
 import time
 import locale
-#import sassie.tools.align.align as align
+import sassie.simulate.torsion_angle_md.torsion_angle_md as torsion_angle_md
 import sassie.interface.input_filter as input_filter
 import sassie.interface.torsion_angle_md_filter as torsion_angle_md_filter
 import multiprocessing
@@ -110,7 +110,7 @@ def run_module(self, **kwargs):
         shutil.rmtree(os.path.join(runname, self.module))
 
     txtQueue = multiprocessing.JoinableQueue()
-    torsion_angle_md.tamd(self.variables,psegvariables,txtQueue)
+    torsion_angle_md.tamd(self.variables,self.psegvariables,txtQueue)
 
 class gui_mimic_torsion_angle_md():
     '''
@@ -130,4 +130,3 @@ if __name__ == '__main__':
     paths = None
 
     run_gui = gui_mimic_torsion_angle_md()
-    print "time used: ", time.time() - start
