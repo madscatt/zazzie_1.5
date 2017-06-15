@@ -4,8 +4,7 @@ Driver method to run the SasCalc module
 
 import sys
 
-#import sassie.calculate.sascalc as sascalc
-import sassie.calculate.sascalc as sascalc
+import sassie.calculate.sascalc.sascalc as sascalc
 import sassie.interface.input_filter as input_filter
 import sassie.interface.sascalc_filter as sascalc_filter
 import multiprocessing
@@ -17,16 +16,8 @@ svariables = {}
 #### user input ####
 
 runname = 'run_0'
-#pdbfile = 'new_lysozyme.pdb'
-#dcdfile = 'new_lysozyme.dcd'
-#dcdfile = 'new_lysozyme.pdb'
-pdbfile = '4x167_min.pdb'
-dcdfile = '4x167_min.pdb'
-#dcdfile = 'c7_2000.dcd'
-#pdbfile = 'new_nist_mab.pdb'
-#dcdfile = '10000_new_nist_mab.dcd'
-#pdbfile = 'small.pdb'
-#dcdfile = '4000.dcd'
+pdbfile = 'min3.pdb'
+dcdfile = 'min3.dcd'
 
 xon = 'neutron'
 #xon = 'xray'
