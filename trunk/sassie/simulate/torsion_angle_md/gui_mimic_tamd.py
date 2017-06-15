@@ -6,9 +6,10 @@ import sys
 import os
 import shutil
 import time
-import sassie.tools.align.align as align
+import locale
+import sassie.simulate.torsion_angle_md.torsion_angle_md as torsion_angle_md
 import sassie.interface.input_filter as input_filter
-#import sassie.interface.torsion_angle_md_filter torsion_angle_md_filter
+import sassie.interface.torsion_angle_md_filter as torsion_angle_md_filter
 import multiprocessing
 
 sys.path.append('../../util')
@@ -29,7 +30,7 @@ def user_variables(self, **kwargs):
     self.topfile         = sasconfig.__bin_path__ + '/toppar/top_all27_prot_na.inp'
     self.parmfile         = sasconfig.__bin_path__ + '/toppar/par_all27_prot_na.inp'
     self.keepout         = '1'
-    self.dcdfreq         = '20'
+    self.dcdfreq         = '10'
     self.charmmexe       = sasconfig.__bin_path__ + '/charmm.exe'
     self.temperature     = '300.0'
     self.rgforce         = '0.0'
@@ -49,9 +50,10 @@ def user_variables(self, **kwargs):
     self.all_moltype=['protein']
 
     self.psegvariables = []
-    for i in xrange(locale.atoi(number_flexible_segments)):
-        self.psegvariables.append([all_flexible_segnames[i],all_snumranges[i],all_srlow[i],all_srnum[i],all_moltype[i]])
+    for i in xrange(locale.atoi(self.number_flexible_segments)):
+        self.psegvariables.append([self.all_flexible_segnames[i],self.all_snumranges[i],self.all_srlow[i],self.all_srnum[i],self.all_moltype[i]])
 
+    self.path = ''
 
     ### END USER INPUT ###
     ### END USER INPUT ###
@@ -96,7 +98,7 @@ def run_module(self, **kwargs):
         print 'error = ', error
         return error
 
-    error = torsion_angle_md_filter.check_tamd(self.variables)
+    error = torsion_angle_md_filter.check_torsion_angle_md(self.variables, self.psegvariables)
 
     if(len(error) > 0):
         print 'error = ', error
@@ -108,7 +110,7 @@ def run_module(self, **kwargs):
         shutil.rmtree(os.path.join(runname, self.module))
 
     txtQueue = multiprocessing.JoinableQueue()
-    torsion_angle_md.tamd(self.variables,psegvariables,txtQueue)
+    torsion_angle_md.tamd(self.variables,self.psegvariables,txtQueue)
 
 class gui_mimic_torsion_angle_md():
     '''
@@ -118,6 +120,7 @@ class gui_mimic_torsion_angle_md():
 
     def __init__(self):
 
+        user_variables(self)
         run_module(self)
 
 
@@ -127,4 +130,3 @@ if __name__ == '__main__':
     paths = None
 
     run_gui = gui_mimic_torsion_angle_md()
-    print "time used: ", time.time() - start
