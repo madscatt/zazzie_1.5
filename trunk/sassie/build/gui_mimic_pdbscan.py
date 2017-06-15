@@ -17,7 +17,8 @@ svariables = {}
 runname='run_0'
 pdbfile='testing/data/3MWY.pdb'
 pdbfile='testing/data/5E3L.pdb'
-pdbfile='R1.pdb'
+pdbfile='testing/data/1D0O.pdb'
+pdbfile='hiv1_gag_ma.pdb'
 
 #### end user input ####
 #### end user input ####

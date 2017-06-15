@@ -15,7 +15,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 import os,string,os,locale,sys,struct,array,time,platform
-import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+try:
+    import Gnuplot,Gnuplot.PlotItems, Gnuplot.funcutils
+except:
+    pass
+
 import numpy
 import sassie.util.sasconfig as sasconfig
 
