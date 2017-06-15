@@ -21,7 +21,7 @@ import time
 import numpy
 import subprocess
 from write_tamd_input import *
-import sassie.sasmol.sasmol as sasmol
+import sasmol.sasmol as sasmol
 
 #       TAMD
 #

@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 import os,sys,locale,string
-import sassie.sasmol.sasmol as sasmol
+import sasmol.sasmol as sasmol
 import sassie.simulate.torsion_angle_md.torsion_angle_md as torsion_angle_md
 import input_filter
 

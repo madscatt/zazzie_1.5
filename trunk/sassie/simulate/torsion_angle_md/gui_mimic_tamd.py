@@ -30,7 +30,7 @@ def user_variables(self, **kwargs):
     self.topfile         = sasconfig.__bin_path__ + '/toppar/top_all27_prot_na.inp'
     self.parmfile         = sasconfig.__bin_path__ + '/toppar/par_all27_prot_na.inp'
     self.keepout         = '1'
-    self.dcdfreq         = '20'
+    self.dcdfreq         = '10'
     self.charmmexe       = sasconfig.__bin_path__ + '/charmm.exe'
     self.temperature     = '300.0'
     self.rgforce         = '0.0'
@@ -98,7 +98,7 @@ def run_module(self, **kwargs):
         print 'error = ', error
         return error
 
-    error = torsion_angle_md_filter.check_tamd(self.variables)
+    error = torsion_angle_md_filter.check_torsion_angle_md(self.variables, self.psegvariables)
 
     if(len(error) > 0):
         print 'error = ', error
