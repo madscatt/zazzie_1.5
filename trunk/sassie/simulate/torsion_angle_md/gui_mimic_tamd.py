@@ -6,9 +6,10 @@ import sys
 import os
 import shutil
 import time
-import sassie.tools.align.align as align
+import locale
+#import sassie.tools.align.align as align
 import sassie.interface.input_filter as input_filter
-#import sassie.interface.torsion_angle_md_filter torsion_angle_md_filter
+import sassie.interface.torsion_angle_md_filter as torsion_angle_md_filter
 import multiprocessing
 
 sys.path.append('../../util')
@@ -49,9 +50,10 @@ def user_variables(self, **kwargs):
     self.all_moltype=['protein']
 
     self.psegvariables = []
-    for i in xrange(locale.atoi(number_flexible_segments)):
-        self.psegvariables.append([all_flexible_segnames[i],all_snumranges[i],all_srlow[i],all_srnum[i],all_moltype[i]])
+    for i in xrange(locale.atoi(self.number_flexible_segments)):
+        self.psegvariables.append([self.all_flexible_segnames[i],self.all_snumranges[i],self.all_srlow[i],self.all_srnum[i],self.all_moltype[i]])
 
+    self.path = ''
 
     ### END USER INPUT ###
     ### END USER INPUT ###
@@ -118,6 +120,7 @@ class gui_mimic_torsion_angle_md():
 
     def __init__(self):
 
+        user_variables(self)
         run_module(self)
 
 
