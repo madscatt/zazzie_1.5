@@ -1,126 +1,17 @@
-11-22-14
-(09-07-16)
+06-15-17
 
-NOTE: the name of the tar-ball will change based on what is currently available !!! "sassie_1.99_rev_0001.tar.gz" is an
-example.  Your file name will be different.
+Installation:
 
+(0) install all required dependencies
 
-Linux Installation:
+(1) edit trunk/sassie/util/sasconfig.py to indicate paths and dependency options
 
-(1) change to the new directory:
-
-> cd sassie_1.99_rev_0001/
+> cd trunk
 
 then type:
 
-> sudo python installer.py
+> python installer.py
 
-and answer the simple questions the installer will ask you:
+using the python version you wish to use for the installation.
 
-(A)  chose /usr/local/bin as the default installation (i.e. enter "1")
-
-Then sit back and wait (the CentOS installation takes quite a long time).  BTW, the Ubuntu install and behavior is probably better than CentOS.
-
-(2)  To test the code (and gain access to the sassie_gui.py script that you need to run the program) 
-
-> cd testing
-
-and you then can run sassie by typing
-
-> python sassie_gui.py
-
-as before, move sassie_gui.py to your own working directory for your own projects.
-
-
-NOTE: for CentOS installations to run sassie you have to type:
-NOTE: for CentOS installations to run sassie you have to type:
-NOTE: for CentOS installations to run sassie you have to type:
-			
-
-
-> /usr/local/bin/bin/python2.7 sassie_gui.py
-
-to run sassie.
-
-of course you can write an alias and/or put /usr/local/bin/bin in your default path:  for csh/tcsh you could type this in your .cshrc file in ~/
-
-set path = ( /usr/local/bin/bin $path )
-
-and then type:
-
-> source ~/.cshrc
-
-then you can run sassie by typing
-
-> python2.7 sassie_gui.py
-
-There is an "export" command you can use if you are a bash user ... put this in your ~/.bashrc 
-
-export PATH=$PATH:/usr/local/bin/bin 
-
-then 
-
-> source ~/.bashrc
-
-to implement this.
-
-I do NOT recommend that you create a soft link of the new python into /usr/bin/ or other places as this may break your operating system (yup, it happened to me).
-
-
- MacOSX Installation:
-
-(0) run software update and make sure you are current (either 10.5.8, 10.6.8, or 10.7.4)
-
-(1) make sure that you have installed the "Developer Tools" from your OS installation disk.  Specifically you need Xcode 3.X or 4.X (for Lion) installed.
-
-***** NOTE ***** NEWER LION & MOUNTAIN LION INSTALLATIONS REQUIRE "COMMAND LINE TOOLS" to be installed.
-
-(2) install AquaTerm 1.1.0.dmg using the supplied "DMG" installer located in sassie_0.99_rev134/sassie/distribution/macosx/.  This is a simple click the mouse type installation.
-
-(3) install epd_free-7.1-2-macosx-i386.dmg using the supplied "DMG" installer located in sassie_0.99_rev134/sassie/distribution/macosx/.  This is a simple click the mouse type installation.
-
-(4) OPEN A NEW TERMINAL and change to the new directory (this is important ... otherwise the non-EPD python will try to install things) ... okay, if you are a Unix guru you can reset the terminal you are in by typing (csh or tcsh)
-
-> rehash 
-
-or for bash
-
-> hash -r
-
-
-> cd sassie_1.99_rev_001/
-
-
-then type:
-
-> sudo python installer.py
-
-and answer the simple questions the installer will ask you:
-
-(A)  chose /usr/local/bin as the default installation  (i.e. enter "1")  [[[ if /usr/local/bin does not exist the installer will prompt you to create it ]]]
-
-and
-
-Then sit back and wait.
-
-(5)  To test the code (and gain access to the sassie_gui.py script that you need to run the program) 
-
-OPEN a new terminal (or if you are using a csh or tcsh) type 
-
-> rehash
-
-or if you are in the bash shell . . . 
-
-> hash -r
-
-
-((( some users need to run gnuplot in a terminal to get AquaTerm to work with sassie apparently if you open a terminal and type > gnuplot  and then when the gnuplot prompt appears type  > plot sin(x)  a plot should show up.  Quit gnuplot ( > quit ) and then proceed again, two out of 10 users have had to do this for reasons we have not figured out yet )))
-
-and you then can run sassie by typing
-
-> python sassie_gui.py
-
-
-as before, move sassie_gui.py to your own working directory for your own projects.
- 
 
