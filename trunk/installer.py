@@ -286,7 +286,7 @@ def modify_sascalc_library_makefile(logfile):
 
     lines = [] 
 
-    lines.append('INCDIR=-I' + sasconfig.__cuda_include_directory__ + '\n')
+    lines.append('INCDIR=-I' + sasconfig.__cuda_include_path__ + '\n')
     lines.append('CC=' + sasconfig.__cuda_gpp__ + '\n')
     lines.append('NVCC=' + sasconfig.__cuda_nvcc__ + '\n')
 
@@ -314,7 +314,6 @@ def compile_sascalc_library(logfile, current_path):
     result = os.popen('make').readlines()
     for line in result:
         log(logfile, line)
-
 
 
     return
@@ -427,6 +426,7 @@ def compile_sassie(logfile, current_path, python):
 
     installst = python + ' setup.py install'
 
+    os.chdir(current_path)
     result = os.popen(buildst).readlines()
     for line in result:
         log(logfile, line)
@@ -436,12 +436,25 @@ def compile_sassie(logfile, current_path, python):
 
     return
 
+def install_sascalc_library(logfile, current_path, python):
+
+    os.chdir(current_path)
+    os.chdir('sassie/calculate/sascalc/sascalc_library/cpp_extension')
+    installst = python + ' setup_sascalc_api.py install'
+    result = os.popen(installst).readlines()
+    for line in result:
+        log(logfile, line)
+
+    os.chdir(current_path)
+
+    return
 
 def install_sassie(logfile, os_type, current_path, install_path, python):
 
     install_toppar(logfile, current_path, install_path)
     compile_extensions(logfile, current_path, python)
-   # compile_sassie(logfile, current_path, python)
+    compile_sassie(logfile, current_path, python)
+    install_sascalc_library(logfile, current_path, python)
 
     return
 

@@ -1,3 +1,21 @@
+INCDIR=-I/share/apps/local/cuda/include
+CC=/usr/bin/g++
+NVCC=/share/apps/local/cuda/bin/nvcc
+INCDIR=-I/share/apps/local/cuda/include
+CC=/usr/bin/g++
+NVCC=/share/apps/local/cuda/bin/nvcc
+INCDIR=-I/share/apps/local/cuda/include
+CC=/usr/bin/g++
+NVCC=/share/apps/local/cuda/bin/nvcc
+INCDIR=-I/share/apps/local/cuda/include
+CC=/usr/bin/g++
+NVCC=/share/apps/local/cuda/bin/nvcc
+INCDIR=-I/share/apps/local/cuda/include
+CC=/usr/bin/g++
+NVCC=/share/apps/local/cuda/bin/nvcc
+INCDIR=-I/share/apps/local/cuda/include
+CC=/usr/bin/g++
+NVCC=/share/apps/local/cuda/bin/nvcc
 DIRSRC=src/
 DIRLIB=lib/
 
