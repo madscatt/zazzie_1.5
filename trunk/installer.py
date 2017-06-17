@@ -198,10 +198,10 @@ def ubuntu_dependencies(logfile, current_path, install_path, version):
     log(logfile, ' >> checking Ubuntu installation\n')
     if(version == 'jessie/sid'):
         files_to_check = ['gcc', 'g++', 'gfortran',
-                          'swig']
+                          'swig', 'pandoc']
 
     else:
-        files_to_check = ['gcc', 'g++', 'gfortran', 'swig']
+        files_to_check = ['gcc', 'g++', 'gfortran', 'swig', 'pandoc']
 
     programs_needed = find_files(logfile, files_to_check)
 
@@ -247,13 +247,19 @@ def ubuntu_dependencies(logfile, current_path, install_path, version):
     return
 
 
-def check_and_install_dependices(logfile, os_type, current_path, install_path):
+def check_and_install_dependices(logfile, os_type, current_path, install_path, python):
 
     log(logfile, '\nCHECKING AND INSTALLING DEPENDENCIES\n')
     if(os_type[1] == 'debian'):
         ubuntu_dependencies(logfile, current_path, install_path, os_type[2])
     else:
         log(logfile, 'unable to install dependencies for os_type[1] = ' + os_type[1])
+
+    
+    install_python_modules(logfile, current_path, python)
+
+    compile_and_install_scat(logfile, current_path, install_path)
+
 
     return
 
@@ -271,6 +277,61 @@ def install_toppar(logfile, current_path, install_path):
         print_error(
             logfile, "toppar did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n")
         sys.exit()
+
+    return
+
+def install_python_modules(logfile, current_path, python):
+
+    os.chdir(current_path)
+    os.chdir('sassie/distribution/general')
+  
+    untar = 'tar -xvzf periodictable-1.3.0.tar.gz' 
+ 
+    result = os.popen(untar).readlines()
+    for line in result:
+        log(logfile, line)
+
+    os.chdir('periodictable-1.3.0')
+
+    installst = python + ' setup.py install'
+
+    result = os.popen(installst).readlines()
+    for line in result:
+        log(logfile, line)
+
+    os.chdir(current_path)
+    os.chdir('sassie/distribution/general')
+
+    untar = 'tar -xvf ProDy-1.8.tar' 
+ 
+    result = os.popen(untar).readlines()
+    for line in result:
+        log(logfile, line)
+
+    os.chdir('ProDy-1.8')
+
+    installst = python + ' setup.py install'
+
+    result = os.popen(installst).readlines()
+    for line in result:
+        log(logfile, line)
+
+    os.chdir(current_path)
+
+    return
+
+def compile_and_install_scat(logfile, current_path, install_path):
+
+    path = current_path+'/sassie/distribution/general/calculate_exe_files/scat/'
+    compilest = '/usr/bin/gfortran -O3 '+path+'scatmbg.f -o '+install_path+'/scat.exe'
+    result = os.popen(compilest).readlines()
+    for line in result:
+        log(logfile,line)
+
+#   if(not os.path.isfile(install_path+'/scat.exe')):
+#       print_error(logfile,compilest)
+#       print_error(logfile,"scat did not compile correctly!\n\nINSTALLATION STOPPING NOW\n\n")
+#       sys.exit()
 
     return
 
@@ -484,7 +545,7 @@ def install_me():
 
     os_type, python = determine_os(logfile, install_path, current_path)
 
-    check_and_install_dependices(logfile, os_type, current_path, install_path)
+    check_and_install_dependices(logfile, os_type, current_path, install_path, python)
 
     install_sassie(logfile, os_type, current_path, install_path, python)
 
