@@ -315,7 +315,6 @@ def compile_sascalc_library(logfile, current_path):
     for line in result:
         log(logfile, line)
 
-
     return
 
 def compile_extensions(logfile, current_path, python):
@@ -323,99 +322,6 @@ def compile_extensions(logfile, current_path, python):
     
     modify_sascalc_library_makefile(logfile)
     compile_sascalc_library(logfile, current_path)
-
-
-    '''
-    spath = current_path + '/sassie/sasmol/'
-    path = current_path + '/sassie/sasmol/extensions/'
-    dpath = path + 'dcdio/'
-    mpath = path + 'mask/'
-    vpath = path + 'sasview/'
-    mmpath = path + 'matrix_math/'
-
-    os.chdir(dpath)
-    buildst1 = python + ' setup_dcdio.py build'
-    result = os.popen(buildst1).readlines()
-    for line in result:
-        log(logfile, line)
-
-    os.chdir(mpath)
-    buildst2 = python + ' setup_mask.py build'
-    result = os.popen(buildst2).readlines()
-    for line in result:
-        log(logfile, line)
-
-    os.chdir(vpath)
-    buildst3 = python + ' setup_sasview_vmd.py build'
-    result = os.popen(buildst3).readlines()
-    for line in result:
-        log(logfile, line)
-
-    os.chdir(mmpath)
-    buildst4 = python + ' setup_matrix_multiply.py build'
-    result = os.popen(buildst4).readlines()
-    for line in result:
-        log(logfile, line)
-
-    os.chdir(current_path)
-
-    cpst1 = 'cp ' + dpath + 'build/lib*/_dcdio.so ' + spath
-    cpst2 = 'cp ' + dpath + 'dcdio.py ' + spath
-    cpst3 = 'cp ' + mpath + 'build/lib*/_mask.so ' + spath
-    cpst4 = 'cp ' + mpath + 'mask.py ' + spath
-    cpst5 = 'cp ' + vpath + 'build/lib*/_sasview_vmd.so ' + spath
-    cpst6 = 'cp ' + vpath + 'sasview_vmd.py ' + spath
-    cpst7 = 'cp ' + mmpath + 'build/lib*/matrix_math.so ' + spath
-
-    result = os.popen(cpst1).readlines()
-    for line in result:
-        log(logfile, line)
-    result = os.popen(cpst2).readlines()
-    for line in result:
-        log(logfile, line)
-    result = os.popen(cpst3).readlines()
-    for line in result:
-        log(logfile, line)
-    result = os.popen(cpst4).readlines()
-    for line in result:
-        log(logfile, line)
-    result = os.popen(cpst5).readlines()
-    for line in result:
-        log(logfile, line)
-    result = os.popen(cpst6).readlines()
-    for line in result:
-        log(logfile, line)
-    result = os.popen(cpst7).readlines()
-    for line in result:
-        log(logfile, line)
-
-    if(not os.path.isfile(spath + '_dcdio.so')):
-        print_error(
-            logfile, "_dcdio.so did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n")
-        sys.exit()
-    if(not os.path.isfile(spath + 'dcdio.py')):
-        print_error(
-            logfile, "dcdio.py did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n")
-        sys.exit()
-    if(not os.path.isfile(spath + '_mask.so')):
-        print_error(
-            logfile, "_mask.so did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n")
-        sys.exit()
-    if(not os.path.isfile(spath + 'mask.py')):
-        print_error(
-            logfile, "mask.py did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n")
-        sys.exit()
-    if(not os.path.isfile(spath + '_sasview_vmd.so')):
-        print "_sasview_vmd.so did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n"
-        sys.exit()
-    if(not os.path.isfile(spath + 'sasview_vmd.py')):
-        print "sasview_vmd.py did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n"
-        sys.exit()
-    if(not os.path.isfile(spath + 'matrix_math.so')):
-        print "matrix_math.so did not install correctly!\n\nINSTALLATION STOPPING NOW\n\n"
-        sys.exit()
-
-    '''
 
     return
 
