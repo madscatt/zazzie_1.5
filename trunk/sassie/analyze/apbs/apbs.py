@@ -21,8 +21,8 @@ import string
 import time
 import subprocess
 from write_apbs_input import *
-import sasmol.sasmol as sasmol
-import sassie.util.sasconfig as sasconfig
+import sassie.sasmol.sasmol as sasmol
+import sassie.sasconfig as sasconfig
 
 #       APBS
 #
@@ -192,8 +192,8 @@ def apbs_driver(variables, txtOutput):
 
     print 'min_max = ', min_max
 
-    maximum_dimensions = [min_max[1][
-        0] - min_max[0][0], min_max[1][1] - min_max[0][1], min_max[1][2] - min_max[0][2]]
+    maximum_dimensions = [min_max[1][0] - min_max[0][0],
+                          min_max[1][1] - min_max[0][1], min_max[1][2] - min_max[0][2]]
     print 'min_max = ', min_max
     print 'maximum_dimensions = ', maximum_dimensions
 
@@ -247,20 +247,18 @@ def apbs_driver(variables, txtOutput):
         runstring = vers + ' : ' + outfile + ' run stated at : ' + ttime
         print runstring
         ncpu = 1
-        #bin_path = sasconfig._bin_path
-        bin_path = sasconfig.__bin_path__ + os.sep
+        bin_path = sasconfig._bin_path
         if(ncpu == 1):
             print 'starting pdb2pqr calculation number: ', istr
             #run_pdb2pqr = 'python /usr/local/bin/pdb2pqr/pdb2pqr.py --ff=charmm --with-ph='+str(ph)+' -v '+path+'junk.pdb junk.pqr >& pdb2pqr.out'
-            run_pdb2pqr = bin_path + 'pdb2pqr/pdb2pqr --ff=charmm --with-ph=' + \
+            run_pdb2pqr = 'python ' + bin_path + 'pdb2pqr.py --ff=charmm --with-ph=' + \
                 str(ph) + ' -v ' + path + 'junk.pdb junk.pqr >& pdb2pqr.out'
-            print 'run_pdb2pqr : ', run_pdb2pqr
 
             os.system(run_pdb2pqr)
 
             print 'starting apbs calculation number: ', istr
             #nst='/usr/local/bin/apbs junk.in >& junk.out &'
-            nst = bin_path + 'apbs junk.in >& junk.out &'
+            nst = bin_path + '/apbs junk.in >& junk.out &'
 
             p = subprocess.Popen(nst, shell=True, executable='/bin/bash')
             sts = os.waitpid(p.pid, 0)[1]
@@ -334,19 +332,19 @@ if __name__ == '__main__':
 
     runname = 'run_0'
     pdbfile = 'ten_mer.pdb'
-    infile = 'ten_mer.pdb'
+    infile = 'ten_mer_two_frames.dcd'
     outfile = 'apbs.dat'
+    ph = '5.5'
     temperature = '300.0'
-    ph = '7.0'
+    ion_conc = '0.15'
     ion_charge = '1.0'
-    ion_conc = '0.0'
     ion_radius = '1.62'
     manual_flag = '0'
-    manual_file = 'apbs.in'
+    manual_file = 'test_input_file.txt'
 
-    # END USER EDIT
-    # END USER EDIT
-    # END USER EDIT
+# END USER EDIT
+# END USER EDIT
+# END USER EDIT
 
     svariables = {}
 
@@ -354,12 +352,12 @@ if __name__ == '__main__':
     svariables['infile'] = (infile, 'string')
     svariables['pdbfile'] = (pdbfile, 'string')
     svariables['outfile'] = (outfile, 'string')
-    svariables['temperature'] = (temperature, 'float')
     svariables['ph'] = (ph, 'float')
+    svariables['temperature'] = (temperature, 'float')
     svariables['ion_charge'] = (ion_charge, 'float')
     svariables['ion_conc'] = (ion_conc, 'float')
     svariables['ion_radius'] = (ion_radius, 'float')
-    svariables['manual_flag'] = (manual_flag, 'int')
+    svariables['manual_flag'] = (manual_flag,'int' )
     svariables['manual_file'] = (manual_file, 'string')
 
     import sassie.interface.input_filter as input_filter
