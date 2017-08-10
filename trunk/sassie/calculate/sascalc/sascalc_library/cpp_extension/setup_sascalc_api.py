@@ -15,7 +15,6 @@ cuda_source_dir=os.path.join('..','cpp_and_cuda_source')
 cpp_library_name = 'sascalc'
 cuda_library_name = 'cudaSascalc'
 
-
 # Third-party modules - we depend on numpy for everything
 import numpy
 
@@ -37,11 +36,14 @@ if os.path.isfile(os.path.join(cpp_source_dir,'lib','libsascalc.a')):
 else:
     cpp_lib = False
 
-if os.path.isfile(os.path.join(cuda_source_dir,'lib','libcudaSascalc.a')):
-    cuda_lib = True
+if sasconfig.__cuda__:
+    if os.path.isfile(os.path.join(cuda_source_dir,'lib','libcudaSascalc.a')):
+        cuda_lib = True
+    else:
+        cuda_lib = False
 else:
     cuda_lib = False
-
+ 
 if not cpp_lib and not cuda_lib:
     print ("Either cpp or cuda lib needs to be pre-built")
     exit(0)
