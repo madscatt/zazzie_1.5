@@ -48,3 +48,6 @@ python installer.py
 
 this will install sassie these additional dependencies that are provided in the distribution and compile CUDA and other required python extensions.
 
+
+### Step by step installation instructions for various Linux OS versions can be found here: https://github.com/madscatt/zazzie_1.5/wiki
+
