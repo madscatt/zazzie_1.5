@@ -18,7 +18,7 @@ import os
 import sys
 import locale
 import string
-import sassie.sasmol.sasmol as sasmol
+import sasmol.sasmol as sasmol
 import sassie.simulate.constraints.constraints as constraints
 import sassie.interface.input_filter as input_filter
 

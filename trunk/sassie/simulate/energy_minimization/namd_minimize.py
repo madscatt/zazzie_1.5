@@ -24,8 +24,7 @@ from write_namd_input import *
 from sassie.simulate.energy_minimization.prepend_namd_input import *
 import sasmol.sasmol as sasmol
 
-sys.path.append('../../util/')
-import sasconfig as sasconfig
+import sassie.util.sasconfig as sasconfig
 
 #       NAMD_MINIMIZE
 #
@@ -205,12 +204,15 @@ def minimize(variables, txtOutput):
         thisdcd = path + 'min_' + istr + '.dcd'
         dcdlist.append(thisdcd)
 
+        print 'use_external_input_file = ', use_external_input_file
+        print 'type(UEIF) = ', str(type(use_external_input_file))
+
         if use_external_input_file:
-            write_namd_input('temp.inp', str(nsteps), str(
-                dcdfreq), path + 'junk.pdb', psffile, thisdcd, parmfile, md, mdsteps, dielect, temperature)
-        else:
             prepend_namd_input('temp.inp', path + 'junk.pdb', psffile, thisdcd, parmfile,
                                external_input_file, velocity_restart_file, extended_system_restart_file)
+        else:
+            write_namd_input('temp.inp', str(nsteps), str(
+                dcdfreq), path + 'junk.pdb', psffile, thisdcd, parmfile, md, mdsteps, dielect, temperature)
 
         print 'starting minimization ( nfiles = ', nf, ')'
         ttime = time.ctime()
