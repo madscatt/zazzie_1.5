@@ -124,7 +124,7 @@ svariables['constraint_fields'] = (constraint_fields, 'string')
 svariables['constraint_resets'] = (constraint_resets, 'string')
 
 svariables['modify_fields_flag'] = (modify_fields_flag, 'boolean')
-svariables['modify_fields_output_filename'] = (modify_fields_output_filename, 'boolean')
+svariables['modify_fields_output_filename'] = (modify_fields_output_filename, 'string')
 svariables['number_of_fields_to_modify'] = (number_of_fields_to_modify, 'int')
 svariables['field_selections'] = (field_selections, 'string')
 svariables['field_options'] = (field_options, 'string')
