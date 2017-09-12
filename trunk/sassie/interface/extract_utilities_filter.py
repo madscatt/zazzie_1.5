@@ -45,6 +45,7 @@ def check_extract_utilities(variables, **kwargs):
         return error
 
     if 'no_file_check' not in kwargs:
+        print 'IN NO FILE CHECK'
         ev, rv, wv = input_filter.check_permissions(path)
         if(not ev or not rv or not wv):
             error.append('permission error in input file path ' +
@@ -187,6 +188,10 @@ def check_extract_utilities(variables, **kwargs):
 
         for sas_input_path in sas_input_paths:
             print 'sas_input_path: ', sas_input_path
+            print 'SAS INPUT PATH'
+            print 'type(extract_sas) = ',  type(extract_sas)
+            print 'extract_sas = ', extract_sas
+
             ev, rv, wv = input_filter.check_permissions(sas_input_path)
             if(not ev or not rv):
                 error.append('permission error in input file path ' +
