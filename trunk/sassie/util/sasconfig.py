@@ -16,8 +16,8 @@ __installation_bin_path__ = '/share/apps/local/bin'
 
 ## CUDA DEFINITIONS ###
 
-#__cuda__ = False
-__cuda__ = True
+__cuda__ = False
+#__cuda__ = True
 __cuda_path__ = '/share/apps/local/cuda'
 
 __cuda_lib_path__ = __cuda_path__ + '/lib64'

@@ -333,6 +333,7 @@ def molgrid(m1,m2,m3,ofile,genpaths,accpos,pos,trans,dtrans,theta,dtheta,cutoff,
 	cartout.close()
 	m3.close_dcd_write(dcdoutfile)
 
+	time.sleep(2)
 	return
 
 def two_body_grid(variables,txtOutput):

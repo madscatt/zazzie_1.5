@@ -19,7 +19,7 @@ import sys
 import locale
 import string
 import sassie.interface.input_filter as input_filter
-import .sasmol.sasmol as sasmol
+import sasmol.sasmol as sasmol
 
 
 #used for SASSIE_gui?  Not tested.
