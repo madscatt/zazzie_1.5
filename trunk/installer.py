@@ -196,53 +196,15 @@ def ubuntu_dependencies(logfile, current_path, install_path, version):
     os_type = "Linux"
 
     log(logfile, ' >> checking Ubuntu installation\n')
-    if(version == 'jessie/sid'):
-        files_to_check = ['gcc', 'g++', 'gfortran',
-                          'swig', 'pandoc']
-
-    else:
-        files_to_check = ['gcc', 'g++', 'gfortran', 'swig', 'pandoc']
+    files_to_check = ['gcc', 'g++', 'gfortran', 'swig', 'pandoc']
 
     programs_needed = find_files(logfile, files_to_check)
 
-    files_to_append = ['libfftw3-3', 'libfftw3-dev']
-                       
-    for file in files_to_append:
-        programs_needed.append(file)
+    log(logfile, 'AUTOMATIC APT NOT ENABLED')
+    log(logfile, 'programs needed = ' + programs_needed)
+    log(logfile, 'cannot proceed with installation')
+    sys.exit()
 
-    #result = os.popen(
-    #    'cp /etc/apt/sources.list /etc/apt/sources.list.backup').readlines()
-    #for line in result:
-    #    log(logfile, line)
-
-    sources = []
-    #sources.append("# the following were added during sassie installation")
-    #sources.append("# by " + getpass.getuser() + " on " + time.ctime())
-    #sources.append("deb http://archive.ubuntu.com/ubuntu hardy main")
-    #sources.append("deb-src http://archive.ubuntu.com/ubuntu hardy main")
-    #sources.append("deb http://archive.ubuntu.com/ubuntu hardy universe")
-    #sources.append("deb-src http://archive.ubuntu.com/ubuntu hardy universe")
-
-    #sourcefile = open('/etc/apt/sources.list', 'a')
-    #for source in sources:
-    #    sourcefile.write("%s\n" % (source))
-    #    log(logfile, 'appending line to sources.list : ' + source)
-    #sourcefile.close()
-
-    if(version == 'jessie/sid'):
-        ##            programs_needed.append('gnuplot-x11')
-        #programs_needed.append('libx32z1')
-        #programs_needed.append('libx32ncurses5')
-        #programs_needed.append('libbz2-dev')
-        bit = platform.architecture()[0]
-
-    print 'APT NOT ENABLED'
-    print 'programs needed = ', programs_needed
-
-    #for program in programs_needed:
-    #    error = apt_install(logfile, program)
-    #    if(len(error) > 0):
-    #        print 'error = ', error
 
     return
 
@@ -472,6 +434,22 @@ def test_installation(logfile, os_type):
 
     return
 
+def test_permissions(logfile):
+
+    return
+
+
+def check_write_permissions_for_python():
+
+    import sys
+    paths = sys.path
+
+    for path in paths:
+        error = check_path(path)
+        if len(error) > 0:
+            return error
+         
+    return error
 
 def preamble(logfile):
 
@@ -483,11 +461,6 @@ def preamble(logfile):
     log(logfile, 'executed by user : ' + user + ' on ' + time.ctime())
     log(logfile, 'current directory : ' + current_path)
     log(logfile, 'hostname : ' + platform.node() + '\n')
-
-    if(user != "root"):
-        print_error(logfile,'\n\nYOU MUST RUN THIS SCRIPT AS ROOT\n\n')
-        log(logfile,'\n\nINSTALLATION STOPPING NOW\n\n')
-        sys.exit()
 
     install_path = sasconfig.__installation_bin_path__
 
@@ -528,6 +501,17 @@ def preamble(logfile):
                     log(logfile, '\n > could not make that directory')
                     log(logfile, '\n\nSTOPPING INSTALLATION NOW\n\n')
                     sys.exit()
+
+    error = check_write_permissions_for_python()
+
+    if(len(error)>0):
+            err = 'Permissions to write modules in chosen Python distribution are not all valid : \n'
+            for my_error in error:
+                final_error = check_path(my_error)
+                if(len(final_error)>0):
+                    err += my_error + '\n'
+            print_error(logfile, err)
+            sys.exit()
                     
     return current_path, install_path
 
@@ -542,6 +526,8 @@ def install_me():
     logfile = open('log_sassie_install.txt', 'w')
 
     current_path, install_path = preamble(logfile)
+
+    sys.exit()
 
     os_type, python = determine_os(logfile, install_path, current_path)
 
