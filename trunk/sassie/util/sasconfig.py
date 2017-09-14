@@ -11,7 +11,6 @@ __level__ = 'DEBUG'
 
 ## INSTALLATION PATH
 
-__installation_path__ = '/share/apps/local'
 __installation_bin_path__ = '/share/apps/local/bin'
 
 ## CUDA DEFINITIONS ###
