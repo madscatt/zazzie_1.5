@@ -192,7 +192,7 @@ def deuterate_neutron_bs(mol, B_neutron_vacuum, mask_active_Hs, mask_inert_Hs, m
         fraction_exH = mvars.fraction_exH_array[i]
         #
         mask_active_Hs_regional = [x and y for (x, y) in zip(mask_active_Hs, mask_exH_regions[i])]
-        count_target_exH_active_Hs = round(mask_active_Hs_regional.count(1)*fraction_exH*D2O_fraction)
+        count_target_exH_active_Hs = int(round(mask_active_Hs_regional.count(1)*fraction_exH*D2O_fraction))
         indices_active_Hs = np.where(np.array(mask_active_Hs_regional) == 1)[0]
         np.random.shuffle(indices_active_Hs)
         indices_exH_active_Hs = indices_active_Hs[:count_target_exH_active_Hs]
@@ -207,7 +207,7 @@ def deuterate_neutron_bs(mol, B_neutron_vacuum, mask_active_Hs, mask_inert_Hs, m
         fraction_deuterated = mvars.fraction_deuterated_array[i]
         #
         mask_inert_Hs_regional = [x and y for (x, y) in zip(mask_inert_Hs, mask_deuteration_regions[i])]
-        count_target_deuterated_inert_Hs = round(mask_inert_Hs_regional.count(1)*fraction_deuterated)
+        count_target_deuterated_inert_Hs = int(round(mask_inert_Hs_regional.count(1)*fraction_deuterated))
         indices_inert_Hs = np.where(np.array(mask_inert_Hs_regional) == 1)[0]
         np.random.shuffle(indices_inert_Hs)
         indices_deuterated_inert_Hs = indices_inert_Hs[:count_target_deuterated_inert_Hs]
