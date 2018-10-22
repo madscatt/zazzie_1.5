@@ -105,6 +105,14 @@ def determine_os(logfile, install_path, current_path):
             supported_flag = 'YES'
             python = sys.executable
             log(logfile, 'installing using PYTHON = '+sys.executable)
+        elif(distname == "debian" and version == "buster/sid"):
+            supported_flag = 'YES'
+            python = sys.executable
+            log(logfile, 'installing using PYTHON = '+sys.executable)
+        elif(distname == "Red Hat Enterprise Linux Workstation" and version == "7.5"):
+            supported_flag = 'YES'
+            python = sys.executable
+            log(logfile, 'installing using PYTHON = '+sys.executable)
         else:
             error = 'this installer does not handle your OS'
             log(logfile, error)
@@ -122,13 +130,16 @@ def determine_os(logfile, install_path, current_path):
         try_anyway = ""
 
         st0 = '\n \t\t (0) QUIT NOW \n'
-        st2 = '\n \t\t (1) DEBIAN TYPE (Debian, Ubuntu, Linux Mint, etc.)\n'
-        st3 = '\n >> quit (0) or enter OS type do you want to mimic ? : (1) '
+        st1 = '\n \t\t (1) RHEL/CENTOS TYPE (RHEL, Centos, etc.)\n'
+        st2 = '\n \t\t (2) DEBIAN TYPE (Debian, Ubuntu, Linux Mint, etc.)\n'
+        st4 = '\n >> quit (0) or enter OS type do you want to mimic ? : (1) '
         log(logfile, st0)
+        log(logfile, st1)
         log(logfile, st2)
+        log(logfile, st4)
 
-        while(try_anyway != "0" and try_anyway != "1"):
-            try_anyway = raw_input(st3)
+        while(try_anyway != "0" and try_anyway != "1" and try_anyway != "2"):
+            try_anyway = raw_input(st4)
 
         st4 = '\n >> you entered ' + try_anyway
 
@@ -139,7 +150,14 @@ def determine_os(logfile, install_path, current_path):
             sys.exit()
         elif(try_anyway == "1"):
             local_os_type = "Linux"
-            distname = "Ubuntu"
+            (distname, version, id) = platform.dist()
+            os_type = [local_os_type, distname, version, platform.architecture()[
+                0]]
+            supported_flag = 'MAYBE'
+            python = sys.executable
+
+        elif(try_anyway == "2"):
+            local_os_type = "Linux"
             (distname, version, id) = platform.dist()
             os_type = [local_os_type, distname, version, platform.architecture()[
                 0]]
@@ -173,38 +191,18 @@ def find_files(logfile, files_to_check):
     return programs_needed
 
 
-def apt_install(logfile, program):
-
-    log(logfile, '>>installing ' + program + ' using apt')
-    error = []
-    st1 = 'apt-get -y install ' + program
-    try:
-        result = os.popen(st1).readlines()
-        for line in result:
-            log(logfile, line)
-    except:
-        error.append = '>>> failed to install ' + \
-            program + '\nINSTALLATION STOPPING\n\n'
-        print_error(error)
-        sys.exit()
-
-    return error
-
 def ubuntu_dependencies(logfile, current_path, install_path, version):
-
-    os_type = "Ubuntu"
-    os_type = "Linux"
 
     log(logfile, ' >> checking Ubuntu installation\n')
     files_to_check = ['gcc', 'g++', 'gfortran', 'swig', 'pandoc']
 
     programs_needed = find_files(logfile, files_to_check)
 
-    log(logfile, 'AUTOMATIC APT NOT ENABLED')
-    log(logfile, 'programs needed = ' + programs_needed)
-    log(logfile, 'cannot proceed with installation')
-    sys.exit()
-
+    if programs_needed:
+        log(logfile, 'AUTOMATIC APT NOT ENABLED')
+        log(logfile, 'programs needed = ' + programs_needed)
+        log(logfile, 'cannot proceed with installation')
+        sys.exit()
 
     return
 
@@ -214,6 +212,9 @@ def check_and_install_dependices(logfile, os_type, current_path, install_path, p
     log(logfile, '\nCHECKING AND INSTALLING DEPENDENCIES\n')
     if(os_type[1] == 'debian'):
         ubuntu_dependencies(logfile, current_path, install_path, os_type[2])
+    elif(os_type[1] == 'Red Hat Enterprise Linux Workstation'):
+        #redhat_dependencies(logfile, current_path, install_path, os_type[2])
+        pass
     else:
         log(logfile, 'unable to install dependencies for os_type[1] = ' + os_type[1])
 
@@ -443,11 +444,13 @@ def check_write_permissions_for_python():
 
     import sys
     paths = sys.path
+    error = []
 
     for path in paths:
-        error = check_path(path)
-        if len(error) > 0:
-            return error
+	if(path[-3:] != "zip" and path[-3:] != "old"):
+        	error = check_path(path)
+        	if len(error) > 0:
+            		return error
          
     return error
 
@@ -526,8 +529,6 @@ def install_me():
     logfile = open('log_sassie_install.txt', 'w')
 
     current_path, install_path = preamble(logfile)
-
-    sys.exit()
 
     os_type, python = determine_os(logfile, install_path, current_path)
 
