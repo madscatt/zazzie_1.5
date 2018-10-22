@@ -20,7 +20,10 @@ import string
 import numpy
 import scipy.spatial.distance
 import scipy
-from scipy.weave import converters
+try:
+    from scipy.weave import converters
+except:
+    from weave import converters
 
 import foverlap
 
