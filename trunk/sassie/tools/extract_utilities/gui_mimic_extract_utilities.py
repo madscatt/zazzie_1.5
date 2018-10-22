@@ -37,7 +37,7 @@ def user_variables(self, **kwargs):
 #    self.output_filename = 'single_frame.dcd' 
 #    self.output_filename = 'periodic.dcd'    
 #    self.output_filename = 'all.dcd'
-    self.extract_trajectory = 'False' #only 'True' or 'False' are valid
+    self.extract_trajectory = 'True' #only 'True' or 'False' are valid
     self.extract_sas = 'False' #only 'True' or 'False' are valid
     self.sas_type = '0'
 #    self.sas_type = '1'
