@@ -113,6 +113,10 @@ def determine_os(logfile, install_path, current_path):
             supported_flag = 'YES'
             python = sys.executable
             log(logfile, 'installing using PYTHON = '+sys.executable)
+        elif(distname == "Red Hat Enterprise Linux Server" and version == "7.6"):
+            supported_flag = 'YES'
+            python = sys.executable
+            log(logfile, 'installing using PYTHON = '+sys.executable)
         else:
             error = 'this installer does not handle your OS'
             log(logfile, error)
